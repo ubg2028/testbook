@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { exams, series, papers, CFG, questionsFor } from '../../lib/data.js';
+import Crumbs from '../../components/Crumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { exams, series, papers, topics, CFG, questionsFor } from '../../lib/data.js';
 import { u } from '../../lib/url.js';
 export function getStaticPaths() {
   return exams.map(e => ({ params: { slug: e.slug }, props: { e } }));
@@ -8,10 +10,22 @@ export function getStaticPaths() {
 const { e } = Astro.props;
 const ss = series.filter(s => s.exam === e.slug);
 const pp = papers.filter(p => p.exam === e.slug).sort((a, b) => b.year - a.year);
+const faq = [
+  [`Are the ${e.name} mock tests free?`, 'Yes. Every paper and mock test here is free, and you do not need to sign up.'],
+  [`How long is each ${e.name} test here?`, `Each test runs ${CFG.duration} minutes with negative marking of ${CFG.neg} for a wrong answer.`],
+  ['Will my progress be saved?', 'Yes, on your device. If you refresh the page or lose power, you can resume from where you stopped.'],
+  [`Where can I check the official ${e.name} syllabus and pattern?`, 'In the official notification from the exam conducting body. Patterns change often, so always confirm there.'],
+];
+const abs = p => new URL(u(p), Astro.site).href;
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], ['Exams', '/exams/'], [e.name, `/exams/${e.slug}/`]].map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(p) })) },
+];
+const tp = topics[e.cat] || [];
 ---
-<Layout title={`${e.name} Previous Year Papers & Mock Tests`} description={`Attempt ${e.name} previous year papers and mock tests online, free, with solutions and score analysis.`} path={`/exams/${e.slug}/`}>
-  <section class="wrap sec">
-    <p class="muted"><a href={u('/exams/')}>All exams</a></p>
+<Layout title={`${e.name} Previous Year Papers & Mock Tests`} description={`Attempt ${e.name} previous year papers and mock tests online, free, with solutions and score analysis.`} path={`/exams/${e.slug}/`} schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Exams', u: u('/exams/') }, { n: e.name }]} />
+  <section class="wrap sec" style="padding-bottom:8px">
     <h1>{e.name}</h1>
     <p class="muted">Previous year papers and mock tests, timed and checked instantly.</p>
   </section>
@@ -26,6 +40,7 @@ const pp = papers.filter(p => p.exam === e.slug).sort((a, b) => b.year - a.year)
       ))}
     </div>
   </section>
+  <AdSlot />
   <section class="wrap sec" id="test-series">
     {ss.map(s => (
       <>
@@ -40,5 +55,16 @@ const pp = papers.filter(p => p.exam === e.slug).sort((a, b) => b.year - a.year)
         </div>
       </>
     ))}
+  </section>
+  {tp.length > 0 && (
+    <section class="wrap sec">
+      <h2>Common subjects</h2>
+      <div class="card"><ul style="padding-left:1.2em;display:grid;gap:6px">{tp.map(x => <li>{x}</li>)}</ul></div>
+      <p class="muted" style="margin-top:10px">Check the official notification for the latest {e.name} pattern and syllabus.</p>
+    </section>
+  )}
+  <section class="wrap sec">
+    <h2>Frequently asked questions</h2>
+    {faq.map(([q, a]) => (<details class="card"><summary>{q}</summary><p class="muted" style="padding:14px 18px;margin:0">{a}</p></details>))}
   </section>
 </Layout>

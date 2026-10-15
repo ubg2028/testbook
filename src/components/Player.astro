@@ -1,0 +1,218 @@
+---
+import { CFG } from '../lib/data.js';
+const { t, qs, back, backLabel, href, daily = false, sample = false } = Astro.props;
+const n = daily ? Math.min(5, qs.length) : qs.length;
+const mins = daily ? 5 : CFG.duration;
+const meta = { id: t.id, title: t.title, href, ...CFG, daily, dq: 5, dtime: 5 };
+const j = o => JSON.stringify(o).replace(/</g, '\\u003c');
+---
+<div class="wrap tp" id="app">
+  <section id="intro" class="card" style="padding:24px">
+    <p class="muted"><a href={back}>{backLabel}</a></p>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.2rem)">{t.title}</h1>
+    <ul class="facts">
+      <li>{n} questions</li>
+      <li>{mins} minutes</li>
+      <li>+{CFG.correct} for a correct answer, -{CFG.neg} for a wrong answer</li>
+      <li>Hindi and English view, switch any time</li>
+      <li>Progress saves on this device, so you can resume after a refresh or power cut</li>
+    </ul>
+    {sample && <p class="muted">This is a demo paper with sample questions.</p>}
+    <div class="acts" style="margin-top:0">
+      <button class="btn" id="go" type="button">Start test</button>
+      <button class="btn ghost" id="last" type="button" hidden>View last result</button>
+      <button class="btn ghost lang" type="button"></button>
+    </div>
+    <p class="kbd">Shortcuts: 1-4 choose option, N next, P previous, M mark, B save question, C clear.</p>
+  </section>
+
+  <section id="exam" hidden>
+    <div class="tp-top">
+      <strong class="trunc">{t.title}</strong>
+      <button class="btn sm ghost lang" type="button"></button>
+      <span class="timer" id="timer" role="timer">--:--</span>
+      <button class="btn sm" id="sub" type="button">Submit</button>
+    </div>
+    <div class="tp-grid">
+      <div class="card">
+        <p class="muted" style="margin:0"><span id="qn"></span>, <span id="qs"></span></p>
+        <h2 class="qt" id="qt"></h2>
+        <div id="opts" role="radiogroup" aria-label="Options"></div>
+        <div class="acts">
+          <button class="btn ghost" id="prev" type="button">Previous</button>
+          <button class="btn ghost" id="mk" type="button"></button>
+          <button class="btn ghost" id="bm" type="button"></button>
+          <button class="btn ghost" id="clr" type="button">Clear answer</button>
+          <button class="btn" id="next" type="button">Save and next</button>
+        </div>
+      </div>
+      <aside class="card pal" aria-label="Question palette">
+        <h3>Questions</h3>
+        <div class="pgrid" id="pal"></div>
+        <ul class="legend">
+          <li><i class="a"></i>Answered</li>
+          <li><i class="s"></i>Seen, not answered</li>
+          <li><i class="m"></i>Marked for review</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section id="result" hidden>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.2rem)">Your result</h1>
+    <p class="muted" style="margin:0">{t.title}</p>
+    <div class="rhead"><div id="ring"></div><p id="cmp" class="muted" style="max-width:340px"></p></div>
+    <div class="stats" id="stats"></div>
+    <h2 class="mt">Subject-wise</h2>
+    <div class="card tbl">
+      <table>
+        <thead><tr><th>Subject</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Correct %</th><th>Avg time</th></tr></thead>
+        <tbody id="subj"></tbody>
+      </table>
+    </div>
+    <div class="sec-h mt"><h2 style="margin:0">Solutions</h2><button class="btn sm ghost lang" type="button"></button></div>
+    <div class="stack" id="sols"></div>
+    <div class="acts">
+      <button class="btn" id="again" type="button">Retake test</button>
+      <button class="btn ghost" id="pdf" type="button">Save as PDF</button>
+      <a class="btn ghost" href={back}>{backLabel}</a>
+    </div>
+  </section>
+</div>
+
+<script type="application/json" id="meta" set:html={j(meta)}></script>
+<script type="application/json" id="qdata" set:html={j(qs)}></script>
+<script>
+  const app = document.getElementById('app');
+  const meta = JSON.parse(document.getElementById('meta').textContent);
+  let Q = JSON.parse(document.getElementById('qdata').textContent);
+  const $ = s => app.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = s => { s = Math.max(0, s); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
+  const lsGet = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+
+  let KEY = 'abhyas:' + meta.id;
+  if (meta.daily) { // same 5 questions all day, a new set tomorrow
+    const d = new Date(), ds = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    KEY += ':' + ds; let a = ds;
+    const rnd = () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    Q = Q.map(q => [rnd(), q]).sort((x, y) => x[0] - y[0]).slice(0, meta.dq).map(x => x[1]);
+    meta.duration = meta.dtime;
+  }
+  const N = Q.length, L = 'ABCDEF';
+  let lang = lsGet('abhyas:lang', 'en'), st = lsGet(KEY, null), timer = 0;
+  const save = () => lsSet(KEY, st);
+  const T = q => (lang === 'hi' && q.qh) || q.q, O = q => (lang === 'hi' && q.oh) || q.o, E = q => (lang === 'hi' && q.eh) || q.e;
+  const show = n => { for (const s of ['intro', 'exam', 'result']) $('#' + s).hidden = s !== n; scrollTo(0, 0); };
+  const running = () => st && st.status === 'run' && st.end > Date.now();
+  const syncLang = () => app.querySelectorAll('.lang').forEach(b => { b.textContent = lang === 'hi' ? 'English' : 'हिन्दी'; });
+
+  function fresh() {
+    st = { status: 'run', end: Date.now() + meta.duration * 60000, ans: Array(N).fill(-1), mark: Array(N).fill(0), seen: Array(N).fill(0), tm: Array(N).fill(0), i: 0 };
+    st.seen[0] = 1; save();
+  }
+  function intro() {
+    $('#go').textContent = running() ? 'Resume test' : 'Start test';
+    $('#last').hidden = !(st && st.status === 'done' && st.res);
+    show('intro');
+  }
+  function run() {
+    if (!st.tm) st.tm = Array(N).fill(0);
+    show('exam'); draw();
+    clearInterval(timer); timer = setInterval(tick, 1000); tick();
+  }
+  function tick() {
+    const r = Math.round((st.end - Date.now()) / 1000);
+    const t = $('#timer'); t.textContent = fmt(r); t.classList.toggle('low', r <= 60);
+    if (r <= 0) return finish();
+    st.tm[st.i]++; save();
+  }
+  function go(i) { st.i = Math.min(N - 1, Math.max(0, i)); st.seen[st.i] = 1; save(); draw(); }
+  const bmKey = i => meta.id + ':' + i + (meta.daily ? ':' + Q[i].q : '');
+  const isBm = i => lsGet('abhyas:bm', []).some(b => b.k === bmKey(i));
+  function draw() {
+    const q = Q[st.i], a = st.ans[st.i];
+    $('#qn').textContent = `Question ${st.i + 1} of ${N}`;
+    $('#qs').textContent = q.s;
+    $('#qt').textContent = T(q);
+    $('#opts').innerHTML = O(q).map((o, k) => `<button type="button" class="opt${a === k ? ' on' : ''}" data-k="${k}" role="radio" aria-checked="${a === k}"><b>${L[k]}</b><span>${esc(o)}</span></button>`).join('');
+    $('#mk').textContent = st.mark[st.i] ? 'Remove review mark' : 'Mark for review';
+    $('#bm').textContent = isBm(st.i) ? 'Saved' : 'Save question';
+    $('#prev').disabled = st.i === 0;
+    $('#next').textContent = st.i === N - 1 ? 'Save' : 'Save and next';
+    $('#pal').innerHTML = Q.map((_, k) => `<button type="button" class="pn${st.ans[k] >= 0 ? ' ans' : st.seen[k] ? ' seen' : ''}${st.mark[k] ? ' mk' : ''}${k === st.i ? ' cur' : ''}" data-i="${k}" aria-label="Question ${k + 1}">${k + 1}</button>`).join('');
+  }
+  function finish() {
+    clearInterval(timer);
+    if (st.status === 'done' && st.res) return result();
+    let c = 0, w = 0; const sub = {};
+    Q.forEach((q, k) => {
+      const a = st.ans[k], s = (sub[q.s] = sub[q.s] || { c: 0, w: 0, n: 0, t: 0, tm: 0 });
+      s.t++; s.tm += (st.tm && st.tm[k]) || 0;
+      if (a < 0) s.n++; else if (a === q.a) { c++; s.c++; } else { w++; s.w++; }
+    });
+    const used = Math.min(meta.duration * 60, Math.round((Date.now() - (st.end - meta.duration * 60000)) / 1000));
+    const score = +(c * meta.correct - w * meta.neg).toFixed(2), max = N * meta.correct;
+    const hist = lsGet('abhyas:hist', []);
+    const past = hist.filter(x => x.id === meta.id);
+    const lower = past.filter(x => x.score / x.max < score / max).length;
+    const cmp = past.length ? `Better than ${lower} of ${past.length} earlier attempt${past.length > 1 ? 's' : ''} on this test.` : 'First attempt of this test. It is now saved in My progress.';
+    st.status = 'done';
+    st.res = { c, w, n: N - c - w, score, max, used, sub, cmp };
+    save();
+    hist.unshift({ id: meta.id, t: meta.title, h: meta.href, d: Date.now(), score, max, c, w, n: N - c - w, sub });
+    lsSet('abhyas:hist', hist.slice(0, 60));
+    result();
+  }
+  function result() {
+    const r = st.res, att = r.c + r.w, acc = att ? Math.round(r.c / att * 100) : 0;
+    $('#ring').innerHTML = `<svg class="ring" viewBox="0 0 100 100" role="img" aria-label="Accuracy ${acc}%"><circle class="b" cx="50" cy="50" r="42"/><circle class="v" cx="50" cy="50" r="42" style="--l:${acc * 2.64}"/><text x="50" y="56" text-anchor="middle">${acc}%</text></svg>`;
+    $('#cmp').textContent = r.cmp || '';
+    $('#stats').innerHTML = [['Score', `${r.score} / ${r.max}`], ['Accuracy', acc + '%'], ['Correct', r.c], ['Wrong', r.w], ['Skipped', r.n], ['Time taken', fmt(r.used)]]
+      .map(([k, v]) => `<div class="card stat"><b>${v}</b><span class="muted">${k}</span></div>`).join('');
+    $('#subj').innerHTML = Object.entries(r.sub).map(([k, s]) => `<tr><td>${esc(k)}</td><td>${s.c}</td><td>${s.w}</td><td>${s.n}</td><td>${Math.round(s.c / s.t * 100)}%</td><td>${Math.round(s.tm / s.t)}s</td></tr>`).join('');
+    $('#sols').innerHTML = Q.map((q, k) => {
+      const a = st.ans[k], cls = a < 0 ? 'muted' : a === q.a ? 'ok' : 'bad';
+      return `<article class="card sol"><h3>${k + 1}. ${esc(T(q))}</h3><p class="${cls}">Your answer: ${a < 0 ? 'Not attempted' : esc(O(q)[a])}</p><p>Correct answer: <b>${esc(O(q)[q.a])}</b></p>${E(q) ? `<p class="muted">${esc(E(q))}</p>` : ''}</article>`;
+    }).join('');
+    show('result');
+  }
+
+  $('#go').onclick = () => { if (!running()) fresh(); run(); };
+  $('#last').onclick = result;
+  $('#again').onclick = () => { fresh(); run(); };
+  $('#pdf').onclick = () => print();
+  app.querySelectorAll('.lang').forEach(b => b.onclick = () => {
+    lang = lang === 'hi' ? 'en' : 'hi'; lsSet('abhyas:lang', lang); syncLang();
+    if (!$('#exam').hidden) draw(); else if (!$('#result').hidden) result();
+  });
+  $('#opts').onclick = e => { const b = e.target.closest('.opt'); if (!b) return; st.ans[st.i] = +b.dataset.k; save(); draw(); };
+  $('#pal').onclick = e => { const b = e.target.closest('.pn'); if (b) go(+b.dataset.i); };
+  $('#prev').onclick = () => go(st.i - 1);
+  $('#next').onclick = () => go(st.i + 1);
+  $('#clr').onclick = () => { st.ans[st.i] = -1; save(); draw(); };
+  $('#mk').onclick = () => { st.mark[st.i] = st.mark[st.i] ? 0 : 1; save(); draw(); };
+  $('#bm').onclick = () => {
+    let b = lsGet('abhyas:bm', []); const k = bmKey(st.i);
+    b = b.some(x => x.k === k) ? b.filter(x => x.k !== k) : [{ k, t: meta.title, h: meta.href, q: Q[st.i] }, ...b].slice(0, 200);
+    lsSet('abhyas:bm', b); draw();
+  };
+  $('#sub').onclick = () => {
+    const left = st.ans.filter(x => x < 0).length;
+    if (confirm(left ? `${left} question(s) not answered. Submit the test?` : 'Submit the test?')) finish();
+  };
+  addEventListener('keydown', e => {
+    if ($('#exam').hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if (/^[1-6]$/.test(k)) { if (Q[st.i].o[+k - 1] !== undefined) { st.ans[st.i] = +k - 1; save(); draw(); } }
+    else if (k === 'n' || k === 'arrowright') go(st.i + 1);
+    else if (k === 'p' || k === 'arrowleft') go(st.i - 1);
+    else if (k === 'm') $('#mk').click();
+    else if (k === 'b') $('#bm').click();
+    else if (k === 'c') $('#clr').click();
+  });
+
+  syncLang();
+  if (st && st.status === 'run' && st.end <= Date.now()) finish(); else intro();
+</script>

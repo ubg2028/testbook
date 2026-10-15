@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import site from '../data/site.json';
+---
+<Layout title="Contact" description="Contact the Abhyas team for feedback, corrections or business enquiries." path="/contact/">
+  <section class="wrap sec"><div class="prose">
+<h1>Contact</h1>
+<p>Found a wrong answer, a typo or a broken page? Tell us and we will fix it.</p>
+<p>Email: <a href={`mailto:${site.email}`} style="color:var(--brand)">{site.email}</a></p>
+<p>When you write, include the test name and the question number so we can find it quickly.</p>
+  </div></section>
+</Layout>

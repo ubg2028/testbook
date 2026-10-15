@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Player from '../components/Player.astro';
+import { questionsFor, hasCustom } from '../lib/data.js';
+import { u } from '../lib/url.js';
+const qs = questionsFor('daily');
+---
+<Layout title="Daily Quiz" description="A fresh 5 question practice quiz every day. Takes 5 minutes, in Hindi or English." path="/daily-quiz/">
+  <Player t={{ id: 'daily', title: 'Daily Quiz' }} qs={qs} back={u('/')} backLabel="Back to home" href={u('/daily-quiz/')} daily sample={!hasCustom('daily')} />
+</Layout>

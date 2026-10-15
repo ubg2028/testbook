@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { u } from '../../lib/url.js';
+---
+<Layout title="My Progress" description="Your test history, weak topics and saved questions. Stored on your device." path="/dashboard/">
+  <section class="wrap sec" id="root" data-home={u('/exams/')}>
+    <h1>My progress</h1>
+    <p class="muted">Everything here is stored on this device only.</p>
+    <div id="out"></div>
+  </section>
+  <script>
+    const $ = id => document.getElementById(id);
+    const get = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const home = $('root').dataset.home;
+    function render() {
+      const H = get('abhyas:hist', []), B = get('abhyas:bm', []);
+      if (!H.length && !B.length) {
+        $('out').innerHTML = `<div class="card empty"><h2>No attempts yet</h2><p class="muted">Take a test and your scores, weak topics and saved questions will show up here.</p><a class="btn" href="${home}">Browse exams</a></div>`;
+        return;
+      }
+      let h = '';
+      if (H.length) {
+        const pct = x => Math.round(x.score / x.max * 100), acc = x => (x.c + x.w) ? Math.round(x.c / (x.c + x.w) * 100) : 0;
+        const avg = Math.round(H.reduce((a, x) => a + acc(x), 0) / H.length), best = Math.max(...H.map(pct));
+        h += `<div class="stats"><div class="card stat"><b>${H.length}</b><span class="muted">Attempts</span></div><div class="card stat"><b>${avg}%</b><span class="muted">Average accuracy</span></div><div class="card stat"><b>${best}%</b><span class="muted">Best score</span></div></div>`;
+        const last = H.slice(0, 10).reverse(), bw = 300 / last.length;
+        h += `<h2 class="mt">Recent scores</h2><div class="card"><svg class="chart" viewBox="0 0 300 110" role="img" aria-label="Score percentage of your last attempts">${[0, 50, 100].map(g => `<line class="gl" x1="0" x2="300" y1="${100 - g}" y2="${100 - g}"/><text x="0" y="${98 - g}">${g}%</text>`).join('')}${last.map((x, i) => { const v = Math.max(pct(x), 0); return `<rect class="bar" x="${i * bw + bw * .2}" y="${100 - v}" width="${bw * .6}" height="${v}" rx="2"><title>${esc(x.t)}: ${pct(x)}%</title></rect>`; }).join('')}</svg></div>`;
+        const agg = {};
+        H.forEach(x => Object.entries(x.sub || {}).forEach(([k, s]) => { const a = agg[k] = agg[k] || { c: 0, t: 0 }; a.c += s.c; a.t += s.t; }));
+        const rows = Object.entries(agg).map(([k, a]) => [k, Math.round(a.c / a.t * 100)]).sort((a, b) => a[1] - b[1]);
+        h += `<h2 class="mt">Topics to practise</h2><div class="card">${rows.map(([k, p]) => `<div class="wk"><span>${esc(k)}</span><div class="track"><i class="${p < 50 ? 'low' : ''}" style="width:${p}%"></i></div><b>${p}%</b></div>`).join('')}</div>`;
+        h += `<h2 class="mt">History</h2><div class="rows">${H.slice(0, 20).map(x => `<a class="row" href="${esc(x.h || home)}"><div class="grow"><h3>${esc(x.t)}</h3><span class="muted">${new Date(x.d).toLocaleDateString()}, ${x.score} / ${x.max}</span></div><span class="btn sm ghost">Retry</span></a>`).join('')}</div>`;
+      }
+      if (B.length) {
+        h += `<h2 class="mt">Saved questions</h2><div class="stack">${B.map((b, i) => `<details class="card"><summary>${esc(b.q.q)}</summary><div style="padding:14px 18px"><p class="muted">${esc(b.t)}</p><ul style="list-style:none">${b.q.o.map((o, k) => `<li style="padding:4px 0${k === b.q.a ? ';color:var(--ok);font-weight:650' : ''}">${'ABCDEF'[k]}. ${esc(o)}</li>`).join('')}</ul>${b.q.e ? `<p class="muted">${esc(b.q.e)}</p>` : ''}<button class="btn sm ghost" data-rm="${i}" type="button">Remove</button></div></details>`).join('')}</div>`;
+      }
+      h += `<p class="mt"><button class="btn ghost" id="wipe" type="button">Delete all my data</button></p>`;
+      $('out').innerHTML = h;
+    }
+    $('out').addEventListener('click', e => {
+      const rm = e.target.closest('[data-rm]');
+      if (rm) { const B = get('abhyas:bm', []); B.splice(+rm.dataset.rm, 1); localStorage.setItem('abhyas:bm', JSON.stringify(B)); render(); }
+      if (e.target.id === 'wipe' && confirm('Delete all saved progress, results and questions on this device?')) {
+        Object.keys(localStorage).filter(k => k.startsWith('abhyas:')).forEach(k => localStorage.removeItem(k)); render();
+      }
+    });
+    render();
+  </script>
+</Layout>

@@ -1,0 +1,10 @@
+---
+import site from '../data/site.json';
+const { client, slot } = site.adsense;
+---
+{client && slot && (
+  <div class="ad" aria-label="Advertisement">
+    <ins class="adsbygoogle" style="display:block;min-height:250px" data-ad-client={client} data-ad-slot={slot} data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+)}

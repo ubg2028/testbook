@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import site from '../data/site.json';
 import { exams, papers, series, examMap, cats, CFG, questionsFor } from '../lib/data.js';
 import { u } from '../lib/url.js';
+import AdSlot from '../components/AdSlot.astro';
 const latest = papers.filter(p => p.year === 2024).slice(0, 8);
 const featured = series.slice(0, 6);
 const popular = exams.slice(0, 6);
@@ -19,6 +20,7 @@ const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: sit
     <div class="chips">
       {popular.map(e => <a class="chip" href={u(`/exams/${e.slug}/`)}>{e.name}</a>)}
     </div>
+    <ul class="badges"><li>Free</li><li>No signup</li><li>Hindi and English</li><li>Works offline</li></ul>
   </section>
 
   <section class="wrap sec lazy">
@@ -45,6 +47,15 @@ const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: sit
       ))}
     </div>
   </section>
+
+  <section class="wrap sec">
+    <div class="card promo">
+      <div><h3>Daily quiz</h3><p class="muted" style="margin:0">5 fresh questions every day. Takes 5 minutes.</p></div>
+      <a class="btn" href={u('/daily-quiz/')}>Take today's quiz</a>
+    </div>
+  </section>
+
+  <AdSlot />
 
   <section class="wrap sec lazy">
     <h2>Why practise here</h2>

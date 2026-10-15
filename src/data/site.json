@@ -1,4 +1,11 @@
 {
  "name": "Abhyas",
- "tagline": "Free previous year papers and mock test series for government exams."
+ "tagline": "Free previous year papers and mock test series for government exams.",
+ "email": "hello@example.com",
+ "adsense": {
+  "client": "",
+  "slot": ""
+ },
+ "telegram": "",
+ "whatsapp": ""
 }

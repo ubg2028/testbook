@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Player from '../../components/Player.astro';
 import { allTests, questionsFor, hasCustom, examMap, CFG } from '../../lib/data.js';
 import { u } from '../../lib/url.js';
 export function getStaticPaths() {
@@ -8,164 +10,13 @@ export function getStaticPaths() {
 const { t } = Astro.props;
 const qs = questionsFor(t.id);
 const exam = examMap[t.exam];
-const back = u(`/exams/${t.exam}/`);
-const meta = { id: t.id, ...CFG };
-const j = o => JSON.stringify(o).replace(/</g, '\\u003c');
-const schema = { '@context': 'https://schema.org', '@type': 'Quiz', name: t.title, about: { '@type': 'Thing', name: exam.name }, educationalLevel: 'Competitive exam preparation', inLanguage: 'en' };
+const abs = p => new URL(u(p), Astro.site).href;
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Quiz', name: t.title, about: { '@type': 'Thing', name: exam.name }, educationalLevel: 'Competitive exam preparation', inLanguage: ['en', 'hi'] },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], [exam.name, `/exams/${exam.slug}/`], [t.title, `/test/${t.id}/`]].map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(p) })) },
+];
 ---
-<Layout title={`${t.title} Online Test`} description={`Attempt ${t.title} online. ${qs.length} questions, ${CFG.duration} minutes, instant score and solutions.`} path={`/test/${t.id}/`} schema={schema}>
-  <div class="wrap tp" id="app">
-    <section id="intro" class="card" style="padding:24px">
-      <p class="muted"><a href={back}>{exam.name}</a></p>
-      <h1 style="font-size:clamp(1.5rem,4vw,2.2rem)">{t.title}</h1>
-      <ul class="facts">
-        <li>{qs.length} questions</li>
-        <li>{CFG.duration} minutes</li>
-        <li>+{CFG.correct} for a correct answer, -{CFG.neg} for a wrong answer</li>
-        <li>Progress saves on this device, so you can resume after a refresh or power cut</li>
-      </ul>
-      {!hasCustom(t.id) && <p class="muted">This is a demo paper with sample questions.</p>}
-      <div class="acts" style="margin-top:0">
-        <button class="btn" id="go" type="button">Start test</button>
-        <button class="btn ghost" id="last" type="button" hidden>View last result</button>
-      </div>
-    </section>
-
-    <section id="exam" hidden>
-      <div class="tp-top">
-        <strong class="trunc">{t.title}</strong>
-        <span class="timer" id="timer" role="timer">--:--</span>
-        <button class="btn sm" id="sub" type="button">Submit</button>
-      </div>
-      <div class="tp-grid">
-        <div class="card">
-          <p class="muted" style="margin:0"><span id="qn"></span>, <span id="qs"></span></p>
-          <h2 class="qt" id="qt"></h2>
-          <div id="opts" role="radiogroup" aria-label="Options"></div>
-          <div class="acts">
-            <button class="btn ghost" id="prev" type="button">Previous</button>
-            <button class="btn ghost" id="mk" type="button"></button>
-            <button class="btn ghost" id="clr" type="button">Clear answer</button>
-            <button class="btn" id="next" type="button">Save and next</button>
-          </div>
-        </div>
-        <aside class="card pal" aria-label="Question palette">
-          <h3>Questions</h3>
-          <div class="pgrid" id="pal"></div>
-          <ul class="legend">
-            <li><i class="a"></i>Answered</li>
-            <li><i class="s"></i>Seen, not answered</li>
-            <li><i class="m"></i>Marked for review</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <section id="result" hidden>
-      <h1 style="font-size:clamp(1.5rem,4vw,2.2rem)">Your result</h1>
-      <p class="muted">{t.title}</p>
-      <div class="stats" id="stats"></div>
-      <h2 class="mt">Subject-wise</h2>
-      <div class="card tbl">
-        <table>
-          <thead><tr><th>Subject</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Correct %</th></tr></thead>
-          <tbody id="subj"></tbody>
-        </table>
-      </div>
-      <h2 class="mt">Solutions</h2>
-      <div class="stack" id="sols"></div>
-      <div class="acts">
-        <button class="btn" id="again" type="button">Retake test</button>
-        <a class="btn ghost" href={back}>More {exam.name} tests</a>
-      </div>
-    </section>
-  </div>
-
-  <script type="application/json" id="meta" set:html={j(meta)}></script>
-  <script type="application/json" id="qdata" set:html={j(qs)}></script>
-  <script>
-    const app = document.getElementById('app');
-    const meta = JSON.parse(document.getElementById('meta').textContent);
-    const Q = JSON.parse(document.getElementById('qdata').textContent);
-    const N = Q.length, KEY = 'abhyas:' + meta.id, L = 'ABCDEF';
-    const $ = s => app.querySelector(s);
-    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const fmt = s => { s = Math.max(0, s); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
-    let st = null, timer = 0;
-    try { st = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
-    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
-    const show = n => { for (const s of ['intro', 'exam', 'result']) $('#' + s).hidden = s !== n; scrollTo(0, 0); };
-    const running = () => st && st.status === 'run' && st.end > Date.now();
-
-    function fresh() {
-      st = { status: 'run', end: Date.now() + meta.duration * 60000, ans: Array(N).fill(-1), mark: Array(N).fill(0), seen: Array(N).fill(0), i: 0 };
-      st.seen[0] = 1; save();
-    }
-    function intro() {
-      $('#go').textContent = running() ? 'Resume test' : 'Start test';
-      $('#last').hidden = !(st && st.status === 'done');
-      show('intro');
-    }
-    function run() {
-      show('exam'); draw();
-      clearInterval(timer); timer = setInterval(tick, 1000); tick();
-    }
-    function tick() {
-      const r = Math.round((st.end - Date.now()) / 1000);
-      const t = $('#timer'); t.textContent = fmt(r); t.classList.toggle('low', r <= 60);
-      if (r <= 0) finish();
-    }
-    function go(i) { st.i = Math.min(N - 1, Math.max(0, i)); st.seen[st.i] = 1; save(); draw(); }
-    function draw() {
-      const q = Q[st.i], a = st.ans[st.i];
-      $('#qn').textContent = `Question ${st.i + 1} of ${N}`;
-      $('#qs').textContent = q.s;
-      $('#qt').textContent = q.q;
-      $('#opts').innerHTML = q.o.map((o, k) => `<button type="button" class="opt${a === k ? ' on' : ''}" data-k="${k}" role="radio" aria-checked="${a === k}"><b>${L[k]}</b><span>${esc(o)}</span></button>`).join('');
-      $('#mk').textContent = st.mark[st.i] ? 'Remove review mark' : 'Mark for review';
-      $('#prev').disabled = st.i === 0;
-      $('#next').textContent = st.i === N - 1 ? 'Save' : 'Save and next';
-      $('#pal').innerHTML = Q.map((_, k) => `<button type="button" class="pn${st.ans[k] >= 0 ? ' ans' : st.seen[k] ? ' seen' : ''}${st.mark[k] ? ' mk' : ''}${k === st.i ? ' cur' : ''}" data-i="${k}" aria-label="Question ${k + 1}">${k + 1}</button>`).join('');
-    }
-    function finish() {
-      clearInterval(timer);
-      let c = 0, w = 0; const sub = {};
-      Q.forEach((q, k) => {
-        const a = st.ans[k], s = (sub[q.s] = sub[q.s] || { c: 0, w: 0, n: 0, t: 0 });
-        s.t++;
-        if (a < 0) s.n++; else if (a === q.a) { c++; s.c++; } else { w++; s.w++; }
-      });
-      const used = Math.min(meta.duration * 60, Math.round((Date.now() - (st.end - meta.duration * 60000)) / 1000));
-      st.status = 'done';
-      st.res = { c, w, n: N - c - w, score: +(c * meta.correct - w * meta.neg).toFixed(2), used, sub };
-      save(); result();
-    }
-    function result() {
-      const r = st.res, att = r.c + r.w, acc = att ? Math.round(r.c / att * 100) : 0;
-      $('#stats').innerHTML = [['Score', `${r.score} / ${N * meta.correct}`], ['Accuracy', acc + '%'], ['Correct', r.c], ['Wrong', r.w], ['Skipped', r.n], ['Time taken', fmt(r.used)]]
-        .map(([k, v]) => `<div class="card stat"><b>${v}</b><span class="muted">${k}</span></div>`).join('');
-      $('#subj').innerHTML = Object.entries(r.sub).map(([k, s]) => `<tr><td>${esc(k)}</td><td>${s.c}</td><td>${s.w}</td><td>${s.n}</td><td>${Math.round(s.c / s.t * 100)}%</td></tr>`).join('');
-      $('#sols').innerHTML = Q.map((q, k) => {
-        const a = st.ans[k], cls = a < 0 ? 'muted' : a === q.a ? 'ok' : 'bad';
-        return `<article class="card sol"><h3>${k + 1}. ${esc(q.q)}</h3><p class="${cls}">Your answer: ${a < 0 ? 'Not attempted' : esc(q.o[a])}</p><p>Correct answer: <b>${esc(q.o[q.a])}</b></p>${q.e ? `<p class="muted">${esc(q.e)}</p>` : ''}</article>`;
-      }).join('');
-      show('result');
-    }
-
-    $('#go').onclick = () => { if (!running()) fresh(); run(); };
-    $('#last').onclick = result;
-    $('#again').onclick = () => { fresh(); run(); };
-    $('#opts').onclick = e => { const b = e.target.closest('.opt'); if (!b) return; st.ans[st.i] = +b.dataset.k; save(); draw(); };
-    $('#pal').onclick = e => { const b = e.target.closest('.pn'); if (b) go(+b.dataset.i); };
-    $('#prev').onclick = () => go(st.i - 1);
-    $('#next').onclick = () => go(st.i + 1);
-    $('#clr').onclick = () => { st.ans[st.i] = -1; save(); draw(); };
-    $('#mk').onclick = () => { st.mark[st.i] = st.mark[st.i] ? 0 : 1; save(); draw(); };
-    $('#sub').onclick = () => {
-      const left = st.ans.filter(x => x < 0).length;
-      if (confirm(left ? `${left} question(s) not answered. Submit the test?` : 'Submit the test?')) finish();
-    };
-
-    if (st && st.status === 'run' && st.end <= Date.now()) finish(); else intro();
-  </script>
+<Layout title={`${t.title} Online Test`} description={`Attempt ${t.title} online in Hindi or English. ${qs.length} questions, ${CFG.duration} minutes, instant score and solutions.`} path={`/test/${t.id}/`} schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: exam.name, u: u(`/exams/${exam.slug}/`) }, { n: t.title }]} />
+  <Player t={t} qs={qs} back={u(`/exams/${t.exam}/`)} backLabel={`More ${exam.name} tests`} href={u(`/test/${t.id}/`)} sample={!hasCustom(t.id)} />
 </Layout>

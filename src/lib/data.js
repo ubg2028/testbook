@@ -19,3 +19,14 @@ export const allTests = [
   ...papers.map(p => ({ id: p.id, exam: p.exam, title: p.title })),
   ...series.flatMap(s => s.tests.map(t => ({ id: t.id, exam: s.exam, title: `${examMap[s.exam].name} ${t.name}` }))),
 ];
+
+// Common subjects per category (shown on exam pages). Edit freely.
+export const topics = {
+  SSC: ['General intelligence and reasoning', 'Quantitative aptitude', 'English comprehension', 'General awareness'],
+  Banking: ['Quantitative aptitude', 'Reasoning ability', 'English language', 'General and financial awareness', 'Computer awareness'],
+  Railways: ['Mathematics', 'General intelligence and reasoning', 'General science', 'General awareness and current affairs'],
+  UPSC: ['General studies: history, polity, geography, economy, environment, science', 'CSAT: comprehension, reasoning, basic numeracy', 'Current affairs'],
+  Teaching: ['Teaching aptitude', 'Child development and pedagogy', 'Reasoning and comprehension', 'Subject specific content'],
+  Defence: ['Mathematics', 'English', 'General knowledge and science'],
+  Police: ['General knowledge', 'Numerical ability', 'Reasoning', 'Hindi'],
+};
