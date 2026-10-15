@@ -1,0 +1,386 @@
+[
+ {
+  "id": "ssc-cgl-2024",
+  "exam": "ssc-cgl",
+  "year": 2024,
+  "title": "SSC CGL 2024 Previous Year Paper"
+ },
+ {
+  "id": "ssc-cgl-2023",
+  "exam": "ssc-cgl",
+  "year": 2023,
+  "title": "SSC CGL 2023 Previous Year Paper"
+ },
+ {
+  "id": "ssc-cgl-2022",
+  "exam": "ssc-cgl",
+  "year": 2022,
+  "title": "SSC CGL 2022 Previous Year Paper"
+ },
+ {
+  "id": "ssc-cgl-2021",
+  "exam": "ssc-cgl",
+  "year": 2021,
+  "title": "SSC CGL 2021 Previous Year Paper"
+ },
+ {
+  "id": "ssc-chsl-2024",
+  "exam": "ssc-chsl",
+  "year": 2024,
+  "title": "SSC CHSL 2024 Previous Year Paper"
+ },
+ {
+  "id": "ssc-chsl-2023",
+  "exam": "ssc-chsl",
+  "year": 2023,
+  "title": "SSC CHSL 2023 Previous Year Paper"
+ },
+ {
+  "id": "ssc-chsl-2022",
+  "exam": "ssc-chsl",
+  "year": 2022,
+  "title": "SSC CHSL 2022 Previous Year Paper"
+ },
+ {
+  "id": "ssc-chsl-2021",
+  "exam": "ssc-chsl",
+  "year": 2021,
+  "title": "SSC CHSL 2021 Previous Year Paper"
+ },
+ {
+  "id": "ssc-gd-2024",
+  "exam": "ssc-gd",
+  "year": 2024,
+  "title": "SSC GD Constable 2024 Previous Year Paper"
+ },
+ {
+  "id": "ssc-gd-2023",
+  "exam": "ssc-gd",
+  "year": 2023,
+  "title": "SSC GD Constable 2023 Previous Year Paper"
+ },
+ {
+  "id": "ssc-gd-2022",
+  "exam": "ssc-gd",
+  "year": 2022,
+  "title": "SSC GD Constable 2022 Previous Year Paper"
+ },
+ {
+  "id": "ssc-gd-2021",
+  "exam": "ssc-gd",
+  "year": 2021,
+  "title": "SSC GD Constable 2021 Previous Year Paper"
+ },
+ {
+  "id": "ssc-mts-2024",
+  "exam": "ssc-mts",
+  "year": 2024,
+  "title": "SSC MTS 2024 Previous Year Paper"
+ },
+ {
+  "id": "ssc-mts-2023",
+  "exam": "ssc-mts",
+  "year": 2023,
+  "title": "SSC MTS 2023 Previous Year Paper"
+ },
+ {
+  "id": "ssc-mts-2022",
+  "exam": "ssc-mts",
+  "year": 2022,
+  "title": "SSC MTS 2022 Previous Year Paper"
+ },
+ {
+  "id": "ssc-mts-2021",
+  "exam": "ssc-mts",
+  "year": 2021,
+  "title": "SSC MTS 2021 Previous Year Paper"
+ },
+ {
+  "id": "rrb-ntpc-2024",
+  "exam": "rrb-ntpc",
+  "year": 2024,
+  "title": "RRB NTPC 2024 Previous Year Paper"
+ },
+ {
+  "id": "rrb-ntpc-2023",
+  "exam": "rrb-ntpc",
+  "year": 2023,
+  "title": "RRB NTPC 2023 Previous Year Paper"
+ },
+ {
+  "id": "rrb-ntpc-2022",
+  "exam": "rrb-ntpc",
+  "year": 2022,
+  "title": "RRB NTPC 2022 Previous Year Paper"
+ },
+ {
+  "id": "rrb-ntpc-2021",
+  "exam": "rrb-ntpc",
+  "year": 2021,
+  "title": "RRB NTPC 2021 Previous Year Paper"
+ },
+ {
+  "id": "rrb-group-d-2024",
+  "exam": "rrb-group-d",
+  "year": 2024,
+  "title": "RRB Group D 2024 Previous Year Paper"
+ },
+ {
+  "id": "rrb-group-d-2023",
+  "exam": "rrb-group-d",
+  "year": 2023,
+  "title": "RRB Group D 2023 Previous Year Paper"
+ },
+ {
+  "id": "rrb-group-d-2022",
+  "exam": "rrb-group-d",
+  "year": 2022,
+  "title": "RRB Group D 2022 Previous Year Paper"
+ },
+ {
+  "id": "rrb-group-d-2021",
+  "exam": "rrb-group-d",
+  "year": 2021,
+  "title": "RRB Group D 2021 Previous Year Paper"
+ },
+ {
+  "id": "rrb-alp-2024",
+  "exam": "rrb-alp",
+  "year": 2024,
+  "title": "RRB ALP 2024 Previous Year Paper"
+ },
+ {
+  "id": "rrb-alp-2023",
+  "exam": "rrb-alp",
+  "year": 2023,
+  "title": "RRB ALP 2023 Previous Year Paper"
+ },
+ {
+  "id": "rrb-alp-2022",
+  "exam": "rrb-alp",
+  "year": 2022,
+  "title": "RRB ALP 2022 Previous Year Paper"
+ },
+ {
+  "id": "rrb-alp-2021",
+  "exam": "rrb-alp",
+  "year": 2021,
+  "title": "RRB ALP 2021 Previous Year Paper"
+ },
+ {
+  "id": "ibps-po-2024",
+  "exam": "ibps-po",
+  "year": 2024,
+  "title": "IBPS PO 2024 Previous Year Paper"
+ },
+ {
+  "id": "ibps-po-2023",
+  "exam": "ibps-po",
+  "year": 2023,
+  "title": "IBPS PO 2023 Previous Year Paper"
+ },
+ {
+  "id": "ibps-po-2022",
+  "exam": "ibps-po",
+  "year": 2022,
+  "title": "IBPS PO 2022 Previous Year Paper"
+ },
+ {
+  "id": "ibps-po-2021",
+  "exam": "ibps-po",
+  "year": 2021,
+  "title": "IBPS PO 2021 Previous Year Paper"
+ },
+ {
+  "id": "ibps-clerk-2024",
+  "exam": "ibps-clerk",
+  "year": 2024,
+  "title": "IBPS Clerk 2024 Previous Year Paper"
+ },
+ {
+  "id": "ibps-clerk-2023",
+  "exam": "ibps-clerk",
+  "year": 2023,
+  "title": "IBPS Clerk 2023 Previous Year Paper"
+ },
+ {
+  "id": "ibps-clerk-2022",
+  "exam": "ibps-clerk",
+  "year": 2022,
+  "title": "IBPS Clerk 2022 Previous Year Paper"
+ },
+ {
+  "id": "ibps-clerk-2021",
+  "exam": "ibps-clerk",
+  "year": 2021,
+  "title": "IBPS Clerk 2021 Previous Year Paper"
+ },
+ {
+  "id": "sbi-po-2024",
+  "exam": "sbi-po",
+  "year": 2024,
+  "title": "SBI PO 2024 Previous Year Paper"
+ },
+ {
+  "id": "sbi-po-2023",
+  "exam": "sbi-po",
+  "year": 2023,
+  "title": "SBI PO 2023 Previous Year Paper"
+ },
+ {
+  "id": "sbi-po-2022",
+  "exam": "sbi-po",
+  "year": 2022,
+  "title": "SBI PO 2022 Previous Year Paper"
+ },
+ {
+  "id": "sbi-po-2021",
+  "exam": "sbi-po",
+  "year": 2021,
+  "title": "SBI PO 2021 Previous Year Paper"
+ },
+ {
+  "id": "sbi-clerk-2024",
+  "exam": "sbi-clerk",
+  "year": 2024,
+  "title": "SBI Clerk 2024 Previous Year Paper"
+ },
+ {
+  "id": "sbi-clerk-2023",
+  "exam": "sbi-clerk",
+  "year": 2023,
+  "title": "SBI Clerk 2023 Previous Year Paper"
+ },
+ {
+  "id": "sbi-clerk-2022",
+  "exam": "sbi-clerk",
+  "year": 2022,
+  "title": "SBI Clerk 2022 Previous Year Paper"
+ },
+ {
+  "id": "sbi-clerk-2021",
+  "exam": "sbi-clerk",
+  "year": 2021,
+  "title": "SBI Clerk 2021 Previous Year Paper"
+ },
+ {
+  "id": "upsc-cse-2024",
+  "exam": "upsc-cse",
+  "year": 2024,
+  "title": "UPSC Civil Services 2024 Previous Year Paper"
+ },
+ {
+  "id": "upsc-cse-2023",
+  "exam": "upsc-cse",
+  "year": 2023,
+  "title": "UPSC Civil Services 2023 Previous Year Paper"
+ },
+ {
+  "id": "upsc-cse-2022",
+  "exam": "upsc-cse",
+  "year": 2022,
+  "title": "UPSC Civil Services 2022 Previous Year Paper"
+ },
+ {
+  "id": "upsc-cse-2021",
+  "exam": "upsc-cse",
+  "year": 2021,
+  "title": "UPSC Civil Services 2021 Previous Year Paper"
+ },
+ {
+  "id": "ugc-net-2024",
+  "exam": "ugc-net",
+  "year": 2024,
+  "title": "UGC NET 2024 Previous Year Paper"
+ },
+ {
+  "id": "ugc-net-2023",
+  "exam": "ugc-net",
+  "year": 2023,
+  "title": "UGC NET 2023 Previous Year Paper"
+ },
+ {
+  "id": "ugc-net-2022",
+  "exam": "ugc-net",
+  "year": 2022,
+  "title": "UGC NET 2022 Previous Year Paper"
+ },
+ {
+  "id": "ugc-net-2021",
+  "exam": "ugc-net",
+  "year": 2021,
+  "title": "UGC NET 2021 Previous Year Paper"
+ },
+ {
+  "id": "ctet-2024",
+  "exam": "ctet",
+  "year": 2024,
+  "title": "CTET 2024 Previous Year Paper"
+ },
+ {
+  "id": "ctet-2023",
+  "exam": "ctet",
+  "year": 2023,
+  "title": "CTET 2023 Previous Year Paper"
+ },
+ {
+  "id": "ctet-2022",
+  "exam": "ctet",
+  "year": 2022,
+  "title": "CTET 2022 Previous Year Paper"
+ },
+ {
+  "id": "ctet-2021",
+  "exam": "ctet",
+  "year": 2021,
+  "title": "CTET 2021 Previous Year Paper"
+ },
+ {
+  "id": "nda-2024",
+  "exam": "nda",
+  "year": 2024,
+  "title": "NDA 2024 Previous Year Paper"
+ },
+ {
+  "id": "nda-2023",
+  "exam": "nda",
+  "year": 2023,
+  "title": "NDA 2023 Previous Year Paper"
+ },
+ {
+  "id": "nda-2022",
+  "exam": "nda",
+  "year": 2022,
+  "title": "NDA 2022 Previous Year Paper"
+ },
+ {
+  "id": "nda-2021",
+  "exam": "nda",
+  "year": 2021,
+  "title": "NDA 2021 Previous Year Paper"
+ },
+ {
+  "id": "up-police-2024",
+  "exam": "up-police",
+  "year": 2024,
+  "title": "UP Police Constable 2024 Previous Year Paper"
+ },
+ {
+  "id": "up-police-2023",
+  "exam": "up-police",
+  "year": 2023,
+  "title": "UP Police Constable 2023 Previous Year Paper"
+ },
+ {
+  "id": "up-police-2022",
+  "exam": "up-police",
+  "year": 2022,
+  "title": "UP Police Constable 2022 Previous Year Paper"
+ },
+ {
+  "id": "up-police-2021",
+  "exam": "up-police",
+  "year": 2021,
+  "title": "UP Police Constable 2021 Previous Year Paper"
+ }
+]

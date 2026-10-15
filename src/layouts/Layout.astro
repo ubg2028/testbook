@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+import { u } from '../lib/url.js';
+const { title, description = site.tagline, path = '/', schema } = Astro.props;
+const full = title === site.name ? title : `${title} | ${site.name}`;
+const canonical = new URL(u(path), Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{full}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#2447d6" />
+  <meta property="og:title" content={full} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+  <link rel="manifest" href={u('/manifest.webmanifest')} />
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="logo" href={u('/')} aria-label={`${site.name} home`}>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#2447d6"/><path d="M9 23 16 8l7 15M12 18h8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {site.name}
+      </a>
+      <nav aria-label="Main">
+        <a href={u('/exams/')}>Exams</a>
+        <a href={u('/test-series/')}>Test series</a>
+        <a href={u('/previous-year-papers/')}>Previous year papers</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main"><slot /></main>
+  <footer class="foot">
+    <div class="wrap">
+      <p>{site.name} is an independent practice platform. It is not affiliated with any exam conducting body.</p>
+      <p>Your test progress is saved on this device only.</p>
+    </div>
+  </footer>
+  <script is:inline define:vars={{ sw: u('/sw.js') }}>
+    if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register(sw).catch(() => {}));
+  </script>
+</body>
+</html>

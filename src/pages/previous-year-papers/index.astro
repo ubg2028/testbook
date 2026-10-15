@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { exams, papers, cats } from '../../lib/data.js';
+import { u } from '../../lib/url.js';
+---
+<Layout title="Previous Year Question Papers" description="Solve previous year question papers of SSC, Banking, Railways, UPSC and other exams online with instant results." path="/previous-year-papers/">
+  <section class="wrap sec">
+    <h1>Previous year papers</h1>
+    <p class="muted">Pick an exam, then a year.</p>
+    {cats.map(c => (
+      <div class="cat">
+        <h3>{c}</h3>
+        {exams.filter(e => e.cat === c).map(e => (
+          <details class="card">
+            <summary>{e.name}</summary>
+            <div class="rows">
+              {papers.filter(p => p.exam === e.slug).sort((a, b) => b.year - a.year).map(p => (
+                <a class="row" href={u(`/test/${p.id}/`)}><div class="grow">{p.title}</div><span class="btn sm ghost">Attempt</span></a>
+              ))}
+            </div>
+          </details>
+        ))}
+      </div>
+    ))}
+  </section>
+</Layout>

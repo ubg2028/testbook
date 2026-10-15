@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { exams, cats } from '../../lib/data.js';
+import { u } from '../../lib/url.js';
+---
+<Layout title="All Exams" description="Browse previous year papers and mock tests for SSC, Banking, Railways, UPSC, Teaching, Defence and Police exams." path="/exams/">
+  <section class="wrap sec">
+    <h1>All exams</h1>
+    {cats.map(c => (
+      <div class="cat">
+        <h3>{c}</h3>
+        <div class="grid">
+          {exams.filter(e => e.cat === c).map(e => (
+            <a class="card row" style="border-top:1px solid var(--line)" href={u(`/exams/${e.slug}/`)}>
+              <span class="ico">{e.name.split(' ').map(w => w[0]).join('').slice(0, 3)}</span>
+              <h3 style="margin:0">{e.name}</h3>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</Layout>

@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { exams, series, cats } from '../../lib/data.js';
+import { u } from '../../lib/url.js';
+---
+<Layout title="Online Test Series" description="Full length mock test series for government exams with negative marking, instant results and solutions." path="/test-series/">
+  <section class="wrap sec">
+    <h1>Test series</h1>
+    <p class="muted">Full length mock tests for every exam.</p>
+    {cats.map(c => (
+      <div class="cat">
+        <h3>{c}</h3>
+        <div class="grid">
+          {series.filter(s => exams.find(e => e.slug === s.exam).cat === c).map(s => (
+            <a class="card" href={u(`/exams/${s.exam}/#test-series`)}>
+              <h3>{s.title}</h3>
+              <p class="muted" style="margin:0">{s.tests.length} full mock tests</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</Layout>

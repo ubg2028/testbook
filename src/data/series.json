@@ -1,0 +1,434 @@
+[
+ {
+  "id": "ssc-cgl-mock",
+  "exam": "ssc-cgl",
+  "title": "SSC CGL Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ssc-cgl-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ssc-cgl-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ssc-cgl-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ssc-cgl-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ssc-cgl-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ssc-chsl-mock",
+  "exam": "ssc-chsl",
+  "title": "SSC CHSL Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ssc-chsl-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ssc-chsl-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ssc-chsl-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ssc-chsl-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ssc-chsl-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ssc-gd-mock",
+  "exam": "ssc-gd",
+  "title": "SSC GD Constable Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ssc-gd-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ssc-gd-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ssc-gd-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ssc-gd-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ssc-gd-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ssc-mts-mock",
+  "exam": "ssc-mts",
+  "title": "SSC MTS Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ssc-mts-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ssc-mts-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ssc-mts-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ssc-mts-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ssc-mts-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "rrb-ntpc-mock",
+  "exam": "rrb-ntpc",
+  "title": "RRB NTPC Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "rrb-ntpc-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "rrb-ntpc-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "rrb-ntpc-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "rrb-ntpc-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "rrb-ntpc-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "rrb-group-d-mock",
+  "exam": "rrb-group-d",
+  "title": "RRB Group D Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "rrb-group-d-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "rrb-group-d-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "rrb-group-d-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "rrb-group-d-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "rrb-group-d-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "rrb-alp-mock",
+  "exam": "rrb-alp",
+  "title": "RRB ALP Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "rrb-alp-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "rrb-alp-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "rrb-alp-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "rrb-alp-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "rrb-alp-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ibps-po-mock",
+  "exam": "ibps-po",
+  "title": "IBPS PO Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ibps-po-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ibps-po-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ibps-po-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ibps-po-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ibps-po-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ibps-clerk-mock",
+  "exam": "ibps-clerk",
+  "title": "IBPS Clerk Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ibps-clerk-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ibps-clerk-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ibps-clerk-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ibps-clerk-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ibps-clerk-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "sbi-po-mock",
+  "exam": "sbi-po",
+  "title": "SBI PO Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "sbi-po-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "sbi-po-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "sbi-po-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "sbi-po-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "sbi-po-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "sbi-clerk-mock",
+  "exam": "sbi-clerk",
+  "title": "SBI Clerk Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "sbi-clerk-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "sbi-clerk-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "sbi-clerk-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "sbi-clerk-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "sbi-clerk-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "upsc-cse-mock",
+  "exam": "upsc-cse",
+  "title": "UPSC Civil Services Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "upsc-cse-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "upsc-cse-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "upsc-cse-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "upsc-cse-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "upsc-cse-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ugc-net-mock",
+  "exam": "ugc-net",
+  "title": "UGC NET Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ugc-net-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ugc-net-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ugc-net-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ugc-net-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ugc-net-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "ctet-mock",
+  "exam": "ctet",
+  "title": "CTET Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "ctet-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "ctet-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "ctet-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "ctet-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "ctet-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "nda-mock",
+  "exam": "nda",
+  "title": "NDA Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "nda-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "nda-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "nda-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "nda-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "nda-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ },
+ {
+  "id": "up-police-mock",
+  "exam": "up-police",
+  "title": "UP Police Constable Mock Test Series 2026",
+  "tests": [
+   {
+    "id": "up-police-mock-1",
+    "name": "Full Mock 1"
+   },
+   {
+    "id": "up-police-mock-2",
+    "name": "Full Mock 2"
+   },
+   {
+    "id": "up-police-mock-3",
+    "name": "Full Mock 3"
+   },
+   {
+    "id": "up-police-mock-4",
+    "name": "Full Mock 4"
+   },
+   {
+    "id": "up-police-mock-5",
+    "name": "Full Mock 5"
+   }
+  ]
+ }
+]

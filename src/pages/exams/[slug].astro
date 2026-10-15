@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { exams, series, papers, CFG, questionsFor } from '../../lib/data.js';
+import { u } from '../../lib/url.js';
+export function getStaticPaths() {
+  return exams.map(e => ({ params: { slug: e.slug }, props: { e } }));
+}
+const { e } = Astro.props;
+const ss = series.filter(s => s.exam === e.slug);
+const pp = papers.filter(p => p.exam === e.slug).sort((a, b) => b.year - a.year);
+---
+<Layout title={`${e.name} Previous Year Papers & Mock Tests`} description={`Attempt ${e.name} previous year papers and mock tests online, free, with solutions and score analysis.`} path={`/exams/${e.slug}/`}>
+  <section class="wrap sec">
+    <p class="muted"><a href={u('/exams/')}>All exams</a></p>
+    <h1>{e.name}</h1>
+    <p class="muted">Previous year papers and mock tests, timed and checked instantly.</p>
+  </section>
+  <section class="wrap sec" id="previous-year-papers">
+    <h2>Previous year papers</h2>
+    <div class="rows">
+      {pp.map(p => (
+        <a class="row" href={u(`/test/${p.id}/`)}>
+          <div class="grow"><h3>{p.title}</h3><span class="muted">{questionsFor(p.id).length} questions, {CFG.duration} minutes</span></div>
+          <span class="btn sm ghost">Attempt</span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="wrap sec" id="test-series">
+    {ss.map(s => (
+      <>
+        <h2>{s.title}</h2>
+        <div class="rows">
+          {s.tests.map(t => (
+            <a class="row" href={u(`/test/${t.id}/`)}>
+              <div class="grow"><h3>{t.name}</h3><span class="muted">{questionsFor(t.id).length} questions, {CFG.duration} minutes</span></div>
+              <span class="btn sm ghost">Attempt</span>
+            </a>
+          ))}
+        </div>
+      </>
+    ))}
+  </section>
+</Layout>

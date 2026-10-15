@@ -1,0 +1,182 @@
+[
+ {
+  "s": "Quant",
+  "q": "What is 15% of 240?",
+  "o": [
+   "32",
+   "36",
+   "40",
+   "24"
+  ],
+  "a": 1,
+  "e": "15/100 x 240 = 36."
+ },
+ {
+  "s": "Quant",
+  "q": "A 120 m long train running at 54 km/h crosses a pole in how many seconds?",
+  "o": [
+   "6",
+   "8",
+   "10",
+   "12"
+  ],
+  "a": 1,
+  "e": "54 km/h = 15 m/s. Time = 120 / 15 = 8 s."
+ },
+ {
+  "s": "Quant",
+  "q": "What is the simple interest on Rs 5000 at 8% per annum for 3 years?",
+  "o": [
+   "Rs 1000",
+   "Rs 1200",
+   "Rs 1400",
+   "Rs 1500"
+  ],
+  "a": 1,
+  "e": "SI = 5000 x 8 x 3 / 100 = 1200."
+ },
+ {
+  "s": "Quant",
+  "q": "If A:B = 2:3 and B:C = 4:5, then A:B:C = ?",
+  "o": [
+   "8:12:15",
+   "2:4:5",
+   "6:12:15",
+   "8:10:15"
+  ],
+  "a": 0,
+  "e": "Make B equal: A:B = 8:12 and B:C = 12:15, so A:B:C = 8:12:15."
+ },
+ {
+  "s": "Quant",
+  "q": "What is the average of the first 10 natural numbers?",
+  "o": [
+   "5",
+   "5.5",
+   "6",
+   "6.5"
+  ],
+  "a": 1,
+  "e": "Sum = 55, so average = 55 / 10 = 5.5."
+ },
+ {
+  "s": "Reasoning",
+  "q": "Find the next number: 2, 6, 12, 20, 30, ?",
+  "o": [
+   "40",
+   "42",
+   "44",
+   "46"
+  ],
+  "a": 1,
+  "e": "Differences are 4, 6, 8, 10, 12, so next = 30 + 12 = 42."
+ },
+ {
+  "s": "Reasoning",
+  "q": "Choose the odd one out.",
+  "o": [
+   "Apple",
+   "Mango",
+   "Potato",
+   "Banana"
+  ],
+  "a": 2,
+  "e": "Potato is a vegetable; the others are fruits."
+ },
+ {
+  "s": "Reasoning",
+  "q": "If A=1, B=2, C=3 and so on, what is the sum of the letters in BAD?",
+  "o": [
+   "5",
+   "6",
+   "7",
+   "8"
+  ],
+  "a": 2,
+  "e": "B + A + D = 2 + 1 + 4 = 7."
+ },
+ {
+  "s": "Reasoning",
+  "q": "A person walks 5 km north and then 5 km east. How far is he from the start?",
+  "o": [
+   "5 km",
+   "About 7.07 km",
+   "10 km",
+   "2.5 km"
+  ],
+  "a": 1,
+  "e": "Distance = 5 x sqrt(2), about 7.07 km."
+ },
+ {
+  "s": "Reasoning",
+  "q": "Pointing to a man, a woman said, 'He is the son of my mother's only son.' How is the man related to the woman?",
+  "o": [
+   "Brother",
+   "Nephew",
+   "Uncle",
+   "Son"
+  ],
+  "a": 1,
+  "e": "Her mother's only son is her brother, so his son is her nephew."
+ },
+ {
+  "s": "English",
+  "q": "Choose the synonym of 'Abundant'.",
+  "o": [
+   "Scarce",
+   "Plentiful",
+   "Rare",
+   "Limited"
+  ],
+  "a": 1,
+  "e": "Abundant means existing in large quantities, the same as plentiful."
+ },
+ {
+  "s": "English",
+  "q": "Choose the antonym of 'Ancient'.",
+  "o": [
+   "Old",
+   "Modern",
+   "Historic",
+   "Antique"
+  ],
+  "a": 1,
+  "e": "Modern is the opposite of ancient."
+ },
+ {
+  "s": "English",
+  "q": "Fill in the blank: She has been working here ___ 2019.",
+  "o": [
+   "for",
+   "since",
+   "from",
+   "by"
+  ],
+  "a": 1,
+  "e": "'Since' is used with a point in time."
+ },
+ {
+  "s": "GK",
+  "q": "Who is known as the Father of the Indian Constitution?",
+  "o": [
+   "Mahatma Gandhi",
+   "Jawaharlal Nehru",
+   "Dr. B. R. Ambedkar",
+   "Sardar Patel"
+  ],
+  "a": 2,
+  "e": "Dr. B. R. Ambedkar chaired the Drafting Committee."
+ },
+ {
+  "s": "GK",
+  "q": "What is the capital of Australia?",
+  "o": [
+   "Sydney",
+   "Melbourne",
+   "Canberra",
+   "Perth"
+  ],
+  "a": 2,
+  "e": "Canberra is the capital of Australia."
+ }
+]

@@ -1,0 +1,82 @@
+[
+ {
+  "slug": "ssc-cgl",
+  "name": "SSC CGL",
+  "cat": "SSC"
+ },
+ {
+  "slug": "ssc-chsl",
+  "name": "SSC CHSL",
+  "cat": "SSC"
+ },
+ {
+  "slug": "ssc-gd",
+  "name": "SSC GD Constable",
+  "cat": "SSC"
+ },
+ {
+  "slug": "ssc-mts",
+  "name": "SSC MTS",
+  "cat": "SSC"
+ },
+ {
+  "slug": "rrb-ntpc",
+  "name": "RRB NTPC",
+  "cat": "Railways"
+ },
+ {
+  "slug": "rrb-group-d",
+  "name": "RRB Group D",
+  "cat": "Railways"
+ },
+ {
+  "slug": "rrb-alp",
+  "name": "RRB ALP",
+  "cat": "Railways"
+ },
+ {
+  "slug": "ibps-po",
+  "name": "IBPS PO",
+  "cat": "Banking"
+ },
+ {
+  "slug": "ibps-clerk",
+  "name": "IBPS Clerk",
+  "cat": "Banking"
+ },
+ {
+  "slug": "sbi-po",
+  "name": "SBI PO",
+  "cat": "Banking"
+ },
+ {
+  "slug": "sbi-clerk",
+  "name": "SBI Clerk",
+  "cat": "Banking"
+ },
+ {
+  "slug": "upsc-cse",
+  "name": "UPSC Civil Services",
+  "cat": "UPSC"
+ },
+ {
+  "slug": "ugc-net",
+  "name": "UGC NET",
+  "cat": "Teaching"
+ },
+ {
+  "slug": "ctet",
+  "name": "CTET",
+  "cat": "Teaching"
+ },
+ {
+  "slug": "nda",
+  "name": "NDA",
+  "cat": "Defence"
+ },
+ {
+  "slug": "up-police",
+  "name": "UP Police Constable",
+  "cat": "Police"
+ }
+]

@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import site from '../data/site.json';
+import { exams, papers, series, examMap, cats, CFG, questionsFor } from '../lib/data.js';
+import { u } from '../lib/url.js';
+const latest = papers.filter(p => p.year === 2024).slice(0, 8);
+const featured = series.slice(0, 6);
+const popular = exams.slice(0, 6);
+const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: new URL(u('/'), Astro.site).href, description: site.tagline };
+---
+<Layout title={site.name} description={site.tagline} path="/" schema={schema}>
+  <section class="wrap hero">
+    <h1>Practice real exam papers.<br />Know your score.</h1>
+    <p class="lead">Previous year papers and mock test series for SSC, Banking, Railways and more. Free, fast, no video courses.</p>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search your exam, like SSC CGL" aria-label="Search exams" autocomplete="off" />
+      <div class="res" id="res" hidden></div>
+    </div>
+    <div class="chips">
+      {popular.map(e => <a class="chip" href={u(`/exams/${e.slug}/`)}>{e.name}</a>)}
+    </div>
+  </section>
+
+  <section class="wrap sec lazy">
+    <div class="sec-h"><h2>Previous year papers</h2><a href={u('/previous-year-papers/')}>View all</a></div>
+    <div class="rows">
+      {latest.map(p => (
+        <a class="row" href={u(`/test/${p.id}/`)}>
+          <span class="ico">{p.year % 100}</span>
+          <div class="grow"><h3>{p.title}</h3><span class="muted">{questionsFor(p.id).length} questions, {CFG.duration} minutes</span></div>
+          <span class="btn sm ghost">Attempt</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap sec lazy">
+    <div class="sec-h"><h2>Test series</h2><a href={u('/test-series/')}>View all</a></div>
+    <div class="grid">
+      {featured.map(s => (
+        <a class="card" href={u(`/exams/${s.exam}/#test-series`)}>
+          <h3>{s.title}</h3>
+          <p class="muted" style="margin:0">{s.tests.length} full mock tests</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap sec lazy">
+    <h2>Why practise here</h2>
+    <div class="feat">
+      <div><h3>Real exam screen</h3><p>Timer, question palette, mark for review and negative marking, like the actual test.</p></div>
+      <div><h3>Instant analysis</h3><p>Score, accuracy and subject-wise breakdown with a solution for every question.</p></div>
+      <div><h3>Resume anytime</h3><p>Progress saves on your device. Refresh or lose power and carry on where you stopped.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap sec lazy">
+    <h2>Browse by exam</h2>
+    {cats.map(c => (
+      <div class="cat">
+        <h3>{c}</h3>
+        <div class="chips">{exams.filter(e => e.cat === c).map(e => <a class="chip" href={u(`/exams/${e.slug}/`)}>{e.name}</a>)}</div>
+      </div>
+    ))}
+  </section>
+
+  <script type="application/json" id="ex" set:html={JSON.stringify(exams.map(e => ({ n: e.name, u: u(`/exams/${e.slug}/`) })))}></script>
+  <script>
+    const i = document.getElementById('q'), r = document.getElementById('res'), d = JSON.parse(document.getElementById('ex').textContent);
+    const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+    i.addEventListener('input', () => {
+      const v = norm(i.value);
+      const m = v ? d.filter(e => norm(e.n).includes(v)).slice(0, 6) : [];
+      r.innerHTML = m.map(e => `<a href="${e.u}">${e.n}</a>`).join('') || (v ? '<span class="muted">No exam found</span>' : '');
+      r.hidden = !v;
+    });
+  </script>
+</Layout>

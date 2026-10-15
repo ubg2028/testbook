@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { u } from '../lib/url.js';
+---
+<Layout title="Page not found" path="/404/">
+  <section class="wrap sec">
+    <h1>Page not found</h1>
+    <p class="muted">This page does not exist. Try the exam list instead.</p>
+    <a class="btn" href={u('/exams/')}>Browse exams</a>
+  </section>
+</Layout>
