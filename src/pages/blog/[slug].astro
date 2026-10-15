@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { render } from 'astro:content';
+import { getPosts, authorMap, fmtDate, isoDate } from '../../lib/blog.js';
+import { examMap } from '../../lib/data.js';
+import { u } from '../../lib/url.js';
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const d = post.data;
+const { Content, headings } = await render(post);
+const toc = headings.filter(h => h.depth === 2);
+const author = authorMap[d.author];
+const reviewer = d.reviewedBy ? authorMap[d.reviewedBy] : null;
+const exam = d.exam ? examMap[d.exam] : null;
+const more = (await getPosts()).filter(p => p.id !== post.id).slice(0, 3);
+const abs = p => new URL(u(p), Astro.site).href;
+const schema = [
+  {
+    '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description,
+    datePublished: isoDate(d.date), dateModified: isoDate(d.updated || d.date), inLanguage: 'en',
+    mainEntityOfPage: abs(`/blog/${post.id}/`),
+    author: d.author === 'abhyas-team' ? { '@type': 'Organization', name: author.name, url: abs(`/authors/${author.slug}/`) } : { '@type': 'Person', name: author.name, url: abs(`/authors/${author.slug}/`) },
+    publisher: { '@type': 'Organization', name: 'Abhyas', url: abs('/') },
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], ['Blog', '/blog/'], [d.title, `/blog/${post.id}/`]].map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(p) })) },
+];
+---
+<Layout title={d.title} description={d.description} path={`/blog/${post.id}/`} schema={schema} ogType="article">
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Blog', u: u('/blog/') }, { n: d.title }]} />
+  <article class="wrap sec">
+    <div class="article">
+      <span class="tag">{d.category}</span>
+      <h1 style="margin-top:10px;font-size:clamp(1.7rem,4.5vw,2.5rem)">{d.title}</h1>
+      <p class="meta">
+        <span>By <a href={u(`/authors/${author.slug}/`)}>{author.name}</a></span>
+        {reviewer && <span>Reviewed by <a href={u(`/authors/${reviewer.slug}/`)}>{reviewer.name}</a></span>}
+        <time datetime={isoDate(d.date)}>Published {fmtDate(d.date)}</time>
+        {d.updated && <time datetime={isoDate(d.updated)}>Updated {fmtDate(d.updated)}</time>}
+      </p>
+    </div>
+    {toc.length > 2 && (
+      <nav class="card toc" aria-label="In this article">
+        <h2>In this article</h2>
+        <ol>{toc.map(h => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+      </nav>
+    )}
+    <div class="prose article"><Content /></div>
+
+    <AdSlot />
+
+    <aside class="card bylinebox" aria-label="About the author">
+      <div class="who">
+        <span class="avatar" aria-hidden="true">{author.initials}</span>
+        <div>
+          <h2 style="font-size:1.1rem"><a href={u(`/authors/${author.slug}/`)}>{author.name}</a></h2>
+          <span class="tag">{author.role}</span>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">{author.bio[0]}</p>
+      <p class="related" style="margin-top:12px"><a href={u(`/authors/${author.slug}/`)}>Read full profile</a><a href={u('/editorial-policy/')}>How we write and check content</a></p>
+    </aside>
+
+    <div class="prose mt">
+      <h2>Keep practising</h2>
+      <p class="related">
+        {exam && <a href={u(`/exams/${exam.slug}/`)}>{exam.name} papers and tests</a>}
+        <a href={u('/previous-year-papers/')}>Previous year papers</a>
+        <a href={u('/test-series/')}>Mock test series</a>
+        <a href={u('/daily-quiz/')}>Daily quiz</a>
+      </p>
+    </div>
+
+    {more.length > 0 && (
+      <div class="mt">
+        <h2>More from the blog</h2>
+        <div class="grid">
+          {more.map(p => (
+            <a class="card" href={u(`/blog/${p.id}/`)}><h3>{p.data.title}</h3><p class="muted" style="margin:0">{p.data.description}</p></a>
+          ))}
+        </div>
+      </div>
+    )}
+  </article>
+</Layout>

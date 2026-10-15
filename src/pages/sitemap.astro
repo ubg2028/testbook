@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { exams, cats } from '../lib/data.js';
+import { getPosts, authors } from '../lib/blog.js';
+import { u } from '../lib/url.js';
+const posts = await getPosts();
+const main = [['Home', '/'], ['All exams', '/exams/'], ['Test series', '/test-series/'], ['Previous year papers', '/previous-year-papers/'], ['Daily quiz', '/daily-quiz/'], ['My progress', '/dashboard/'], ['Blog', '/blog/']];
+const about = [['About us', '/about/'], ['Our team', '/team/'], ['Editorial policy', '/editorial-policy/'], ['Contact', '/contact/']];
+const legal = [['Privacy policy', '/privacy-policy/'], ['Terms of use', '/terms/'], ['Disclaimer', '/disclaimer/'], ['Copyright and DMCA', '/dmca/']];
+---
+<Layout title="Sitemap" description="A list of every main page on Abhyas: exams, test series, previous year papers, blog and policies." path="/sitemap/">
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Sitemap' }]} />
+  <section class="wrap sec">
+    <h1>Sitemap</h1>
+    <p class="muted">Every main page on Abhyas in one place.</p>
+    <div class="grid mt">
+      <div class="card"><h2 style="font-size:1.1rem">Practice</h2><ul class="maplist" style="list-style:none">{main.map(([n, p]) => <li><a href={u(p)}>{n}</a></li>)}</ul></div>
+      <div class="card"><h2 style="font-size:1.1rem">About Abhyas</h2><ul class="maplist" style="list-style:none">{about.map(([n, p]) => <li><a href={u(p)}>{n}</a></li>)}{authors.map(a => <li><a href={u(`/authors/${a.slug}/`)}>{a.name}</a></li>)}</ul></div>
+      <div class="card"><h2 style="font-size:1.1rem">Legal</h2><ul class="maplist" style="list-style:none">{legal.map(([n, p]) => <li><a href={u(p)}>{n}</a></li>)}</ul></div>
+    </div>
+    <h2 class="mt">Blog articles</h2>
+    {posts.length ? <ul class="maplist" style="list-style:none">{posts.map(p => <li><a href={u(`/blog/${p.id}/`)}>{p.data.title}</a></li>)}</ul> : <p class="muted">No articles yet.</p>}
+    <h2 class="mt">Exams</h2>
+    {cats.map(c => (
+      <div class="cat">
+        <h3>{c}</h3>
+        <ul class="maplist" style="list-style:none">{exams.filter(e => e.cat === c).map(e => <li><a href={u(`/exams/${e.slug}/`)}>{e.name}</a></li>)}</ul>
+      </div>
+    ))}
+  </section>
+</Layout>

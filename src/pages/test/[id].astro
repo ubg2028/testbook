@@ -18,5 +18,17 @@ const schema = [
 ---
 <Layout title={`${t.title} Online Test`} description={`Attempt ${t.title} online in Hindi or English. ${qs.length} questions, ${CFG.duration} minutes, instant score and solutions.`} path={`/test/${t.id}/`} schema={schema}>
   <Crumbs items={[{ n: 'Home', u: u('/') }, { n: exam.name, u: u(`/exams/${exam.slug}/`) }, { n: t.title }]} />
+  {hasCustom(t.id) && (
+    <div class="wrap"><div class="note"><p>Questions and answers on this paper were checked by <a href={u('/authors/jay-verma/')}>Jay Verma</a>. Read how we <a href={u('/editorial-policy/')}>verify content</a>. Spotted a mistake? <a href={u('/contact/')}>Report it</a>.</p></div></div>
+  )}
   <Player t={t} qs={qs} back={u(`/exams/${t.exam}/`)} backLabel={`More ${exam.name} tests`} href={u(`/test/${t.id}/`)} sample={!hasCustom(t.id)} />
+  <section class="wrap sec" style="padding-top:0">
+    <p class="related">
+      <a href={u(`/exams/${exam.slug}/`)}>All {exam.name} papers and tests</a>
+      <a href={u('/previous-year-papers/')}>Previous year papers</a>
+      <a href={u('/test-series/')}>Test series</a>
+      <a href={u('/blog/mock-test-analysis-method/')}>How to analyse this test</a>
+      <a href={u('/blog/negative-marking-strategy/')}>Negative marking strategy</a>
+    </p>
+  </section>
 </Layout>

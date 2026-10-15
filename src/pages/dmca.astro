@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import site from '../data/site.json';
+import { u } from '../lib/url.js';
+---
+<Layout title="Copyright and DMCA" description="How Abhyas treats copyright, and how to report content you believe infringes your rights." path="/dmca/">
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Copyright and DMCA' }]} />
+  <section class="wrap sec"><div class="prose">
+<h1>Copyright and DMCA</h1>
+<p>Last updated October 2026.</p>
+<h2>Our approach</h2>
+<p>We respect the rights of authors, publishers and exam conducting bodies. Previous year question papers are public records released by the conducting body. Mock tests, solutions and articles on Abhyas are prepared by our team for practice. We do not knowingly publish leaked papers or material copied from other sites or publishers without permission. See the <a href={u('/editorial-policy/')}>editorial policy</a>.</p>
+<h2>Using our content</h2>
+<p>You may use Abhyas for your own practice. Please do not copy, resell or redistribute our tests, solutions or articles in bulk without written permission. You may quote a short part of an article with a clear link back to the original page. More in the <a href={u('/terms/')}>terms of use</a>.</p>
+<h2>Report a copyright problem</h2>
+<p>If you believe something on Abhyas infringes your copyright, email <a href={`mailto:${site.email}`}>{site.email}</a> with the subject line "Copyright notice" and include:</p>
+<ol>
+  <li>The web address (URL) of the page.</li>
+  <li>A description of the work you say was copied, and proof that you own it or act for the owner.</li>
+  <li>Your name, email address and postal address.</li>
+  <li>A statement that you believe in good faith that the use is not authorised.</li>
+  <li>A statement that the information in your notice is accurate.</li>
+</ol>
+<p>We review each notice promptly. Where a claim is valid we remove or correct the content, and we may tell the person who supplied it. You can also reach us on the <a href={u('/contact/')}>contact page</a>.</p>
+<h2>Related pages</h2>
+<p><a href={u('/disclaimer/')}>Disclaimer</a>, <a href={u('/privacy-policy/')}>Privacy policy</a> and <a href={u('/about/')}>About Abhyas</a>.</p>
+  </div></section>
+</Layout>

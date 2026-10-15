@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "niraj-singh",
+    "name": "Niraj Singh",
+    "initials": "NS",
+    "role": "Founder and CEO",
+    "summary": "Founded Abhyas and sets the direction, exam coverage and editorial standards of the site.",
+    "bio": [
+      "Niraj Singh founded Abhyas to give government exam aspirants one simple place to practise previous year papers and full-length mock tests, without paying or signing up. He leads the direction of the site: which exams are covered, which papers and test series are added, and the standards every page has to meet before it goes live.",
+      "He oversees the platform and reads the feedback that arrives through the contact page, so a report about a wrong answer or a confusing question reaches the person who can act on it. He also approves the editorial policy that the whole team follows."
+    ],
+    "focus": [
+      "Exam coverage across SSC, Banking, Railways, UPSC, Teaching, Defence and Police exams",
+      "Mock test design: timing, negative marking and score analysis",
+      "Editorial standards and the corrections process",
+      "Reader feedback and site quality"
+    ]
+  },
+  {
+    "slug": "jay-verma",
+    "name": "Jay Verma",
+    "initials": "JV",
+    "role": "Content Verification Reviewer",
+    "summary": "Checks every previous year paper, mock test series and PYQ PDF the team adds, before and after it goes live.",
+    "bio": [
+      "Jay Verma reviews the previous year papers, mock test series and PYQ PDFs that the Abhyas team prepares. His job is to confirm that each one is correct, complete and fit for exam practice before readers rely on it.",
+      "For each item he compares the questions with the source paper, confirms the answer key and the solutions, looks for duplicate or missing questions, and checks that the Hindi and English versions of a question say the same thing. When a reader reports a mistake, he re-checks the item and the team corrects it on the page."
+    ],
+    "focus": [
+      "Verification of previous year papers against the source paper",
+      "Answer key and solution checks for mock test series",
+      "PYQ PDF checks: page order, missing questions, readability",
+      "Hindi and English consistency",
+      "Re-checking items after a reader reports an error"
+    ]
+  },
+  {
+    "slug": "abhyas-team",
+    "name": "The Abhyas Team",
+    "initials": "AT",
+    "role": "Editorial team",
+    "summary": "The main author of Abhyas. Writes exam guides, preparation strategies, paper write-ups and test analysis.",
+    "bio": [
+      "The Abhyas Team writes most of what you read and practise here: exam guides, preparation strategies, previous year paper write-ups, mock test analysis and solutions. Articles under this byline are written for aspirants of SSC, Banking, Railways, UPSC, Teaching, Defence and Police exams.",
+      "Anything that depends on a specific paper or test is checked by Jay Verma, and any fact about an exam, such as its pattern, syllabus or dates, is checked against the official notification before it is published. The rules the team works by are on the editorial policy page."
+    ],
+    "focus": [
+      "Exam guides and preparation strategy",
+      "Previous year paper write-ups and topic trends",
+      "Mock test analysis and how to learn from mistakes",
+      "Daily quiz and practice routines"
+    ]
+  }
+]

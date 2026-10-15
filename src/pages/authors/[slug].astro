@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { authors, getPosts, fmtDate } from '../../lib/blog.js';
+import { u } from '../../lib/url.js';
+export function getStaticPaths() {
+  return authors.map(a => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const posts = await getPosts();
+const written = posts.filter(p => p.data.author === a.slug);
+const reviewed = posts.filter(p => p.data.reviewedBy === a.slug && p.data.author !== a.slug);
+const abs = p => new URL(u(p), Astro.site).href;
+const person = a.slug === 'abhyas-team'
+  ? { '@type': 'Organization', name: a.name, url: abs(`/authors/${a.slug}/`), parentOrganization: { '@type': 'Organization', name: 'Abhyas', url: abs('/') } }
+  : { '@type': 'Person', name: a.name, jobTitle: a.role, url: abs(`/authors/${a.slug}/`), worksFor: { '@type': 'Organization', name: 'Abhyas', url: abs('/') } };
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'ProfilePage', mainEntity: person },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], ['Our team', '/team/'], [a.name, `/authors/${a.slug}/`]].map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(p) })) },
+];
+const others = authors.filter(x => x.slug !== a.slug);
+---
+<Layout title={`${a.name}, ${a.role}`} description={`${a.name} is the ${a.role.toLowerCase()} at Abhyas. ${a.summary}`} path={`/authors/${a.slug}/`} schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Our team', u: u('/team/') }, { n: a.name }]} />
+  <section class="wrap sec">
+    <div class="prose">
+      <div class="who" style="margin-bottom:20px">
+        <span class="avatar lg" aria-hidden="true">{a.initials}</span>
+        <div><h1 style="margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)">{a.name}</h1><span class="tag">{a.role}</span></div>
+      </div>
+      {a.bio.map(p => <p>{p}</p>)}
+      <h2>Areas of work</h2>
+      <ul>{a.focus.map(f => <li>{f}</li>)}</ul>
+      <h2>Standards we follow</h2>
+      <p>Everything {a.name} works on follows the <a href={u('/editorial-policy/')}>editorial policy</a>. If you spot an error in any page, please <a href={u('/contact/')}>contact us</a>.</p>
+    </div>
+
+    {written.length > 0 && (
+      <div class="mt">
+        <h2>Articles by {a.name}</h2>
+        <div class="postlist">
+          {written.map(p => (
+            <a class="card" href={u(`/blog/${p.id}/`)}>
+              <span class="tag">{p.data.category}</span>
+              <h3>{p.data.title}</h3>
+              <p class="muted">{p.data.description}</p>
+              <span class="muted">{fmtDate(p.data.date)}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+    {reviewed.length > 0 && (
+      <div class="mt">
+        <h2>Articles reviewed by {a.name}</h2>
+        <div class="postlist">
+          {reviewed.map(p => (
+            <a class="card" href={u(`/blog/${p.id}/`)}><h3>{p.data.title}</h3><p class="muted" style="margin:0">{p.data.description}</p></a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div class="prose mt">
+      <h2>Meet the rest of the team</h2>
+      <p class="related">
+        {others.map(o => <a href={u(`/authors/${o.slug}/`)}>{o.name}</a>)}
+        <a href={u('/team/')}>Full team page</a>
+        <a href={u('/blog/')}>Blog</a>
+      </p>
+    </div>
+  </section>
+</Layout>

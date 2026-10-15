@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import { exams, series, papers, topics, CFG, questionsFor } from '../../lib/data.js';
+import { getPosts, authorMap, fmtDate } from '../../lib/blog.js';
 import { u } from '../../lib/url.js';
 export function getStaticPaths() {
   return exams.map(e => ({ params: { slug: e.slug }, props: { e } }));
@@ -22,6 +23,9 @@ const schema = [
   { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', '/'], ['Exams', '/exams/'], [e.name, `/exams/${e.slug}/`]].map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(p) })) },
 ];
 const tp = topics[e.cat] || [];
+const allPosts = await getPosts();
+const guides = [...allPosts.filter(p => p.data.exam === e.slug), ...allPosts.filter(p => p.data.exam !== e.slug)].slice(0, 3);
+const related = exams.filter(x => x.cat === e.cat && x.slug !== e.slug);
 ---
 <Layout title={`${e.name} Previous Year Papers & Mock Tests`} description={`Attempt ${e.name} previous year papers and mock tests online, free, with solutions and score analysis.`} path={`/exams/${e.slug}/`} schema={schema}>
   <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Exams', u: u('/exams/') }, { n: e.name }]} />
@@ -63,8 +67,25 @@ const tp = topics[e.cat] || [];
       <p class="muted" style="margin-top:10px">Check the official notification for the latest {e.name} pattern and syllabus.</p>
     </section>
   )}
+  {guides.length > 0 && (
+    <section class="wrap sec">
+      <div class="sec-h"><h2>Preparation guides</h2><a href={u('/blog/')}>All articles</a></div>
+      <div class="grid">
+        {guides.map(p => (
+          <a class="card" href={u(`/blog/${p.id}/`)}><h3>{p.data.title}</h3><p class="muted" style="margin:0">{p.data.description}</p></a>
+        ))}
+      </div>
+    </section>
+  )}
+  {related.length > 0 && (
+    <section class="wrap sec">
+      <h2>Other {e.cat} exams</h2>
+      <div class="chips">{related.map(x => <a class="chip" href={u(`/exams/${x.slug}/`)}>{x.name}</a>)}</div>
+    </section>
+  )}
   <section class="wrap sec">
     <h2>Frequently asked questions</h2>
     {faq.map(([q, a]) => (<details class="card"><summary>{q}</summary><p class="muted" style="padding:14px 18px;margin:0">{a}</p></details>))}
+    <p class="muted" style="margin-top:14px">Papers and tests are checked as described in our <a href={u('/editorial-policy/')} style="color:var(--brand);text-decoration:underline">editorial policy</a>. Found a mistake? <a href={u('/contact/')} style="color:var(--brand);text-decoration:underline">Tell us</a>. See also all <a href={u('/previous-year-papers/')} style="color:var(--brand);text-decoration:underline">previous year papers</a> and <a href={u('/test-series/')} style="color:var(--brand);text-decoration:underline">test series</a>.</p>
   </section>
 </Layout>

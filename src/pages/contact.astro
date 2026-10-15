@@ -1,12 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
 import site from '../data/site.json';
+import { u } from '../lib/url.js';
+const schema = { '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Contact Abhyas', url: new URL(u('/contact/'), Astro.site).href };
 ---
-<Layout title="Contact" description="Contact the Abhyas team for feedback, corrections or business enquiries." path="/contact/">
+<Layout title="Contact" description="Contact the Abhyas team to report a wrong answer, send feedback, suggest a paper or ask a business or copyright question." path="/contact/" schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Contact' }]} />
   <section class="wrap sec"><div class="prose">
-<h1>Contact</h1>
-<p>Found a wrong answer, a typo or a broken page? Tell us and we will fix it.</p>
-<p>Email: <a href={`mailto:${site.email}`} style="color:var(--brand)">{site.email}</a></p>
-<p>When you write, include the test name and the question number so we can find it quickly.</p>
+<h1>Contact us</h1>
+<p class="lede">Found a wrong answer, a typo or a broken page? Tell us and we will look into it.</p>
+<p>Email: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+<p>We read every message and aim to reply within a few working days.</p>
+
+<h2>Reporting a mistake in a paper or test</h2>
+<p>Please include the test name and the question number so we can find it quickly. Reports are re-checked by our verification reviewer, and confirmed errors are corrected on the page. This is part of our <a href={u('/editorial-policy/')}>editorial policy</a>.</p>
+
+<h2>Other reasons to write</h2>
+<ul>
+  <li><strong>Suggest a paper or exam.</strong> Tell us which exam and year you want to see.</li>
+  <li><strong>Feedback on the site.</strong> Tell us what is slow, confusing or missing.</li>
+  <li><strong>Copyright notices.</strong> Follow the steps on the <a href={u('/dmca/')}>copyright page</a>.</li>
+  <li><strong>Business and writing enquiries.</strong> Use the subject line "Business".</li>
+</ul>
+
+<h2>Before you write</h2>
+<p>Abhyas is a practice platform and is not connected to any exam conducting body, so we cannot answer questions about application forms, admit cards, results or exam dates. For those, please use the official website of the exam. Find out more on the <a href={u('/about/')}>about page</a> and meet the <a href={u('/team/')}>team</a>.</p>
   </div></section>
 </Layout>

@@ -1,13 +1,46 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import site from '../data/site.json';
+import { u } from '../lib/url.js';
+const abs = p => new URL(u(p), Astro.site).href;
+const schema = {
+  '@context': 'https://schema.org', '@type': 'AboutPage', name: 'About Abhyas', url: abs('/about/'),
+  mainEntity: { '@type': 'Organization', name: site.name, url: abs('/'), description: site.tagline, founder: { '@type': 'Person', name: 'Niraj Singh', jobTitle: 'Founder and CEO', url: abs('/authors/niraj-singh/') }, contactPoint: { '@type': 'ContactPoint', email: site.email, contactType: 'customer support' } },
+};
 ---
-<Layout title="About" description="Free previous year papers and mock tests for government exam preparation." path="/about/">
+<Layout title="About" description="Abhyas is a free practice platform for government exam aspirants, with previous year papers and mock test series checked by a dedicated reviewer." path="/about/" schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'About' }]} />
   <section class="wrap sec"><div class="prose">
 <h1>About Abhyas</h1>
-<p>Abhyas is a free practice platform for government exam aspirants. It focuses on two things only: previous year papers and mock test series. There are no video courses and no paid plans.</p>
+<p class="lede">Abhyas is a free practice platform for government exam aspirants. It focuses on two things only: previous year papers and mock test series. There are no video courses and no paid plans.</p>
+
+<h2>Why we built it</h2>
+<p>Many aspirants practise on slow, cluttered sites that ask for a signup before a single question. We wanted a fast, clean place where you can open a paper, start the timer and see your score and solutions straight away, in Hindi or English, on a phone with a weak connection.</p>
+
 <h2>What you get</h2>
-<ul><li>Timed tests with a question palette, review marking and negative marking.</li><li>Instant score, accuracy and subject-wise analysis with a solution for every question.</li><li>Hindi and English question view.</li><li>Progress, saved questions and history stored on your own device.</li></ul>
+<ul>
+  <li>Timed tests with a question palette, review marking and negative marking, like the real computer-based exam.</li>
+  <li>Instant score, accuracy and subject-wise analysis with a solution for every question.</li>
+  <li>Hindi and English question view, switchable at any time.</li>
+  <li>Progress, saved questions and history stored on your own device, with no account needed.</li>
+  <li>Guides on the <a href={u('/blog/')}>blog</a> on how to prepare and how to learn from each test.</li>
+</ul>
+<p>Start with the <a href={u('/exams/')}>list of exams</a>, the <a href={u('/previous-year-papers/')}>previous year papers</a> or the <a href={u('/test-series/')}>mock test series</a>, or take the five-minute <a href={u('/daily-quiz/')}>daily quiz</a>.</p>
+
+<h2>Who runs Abhyas</h2>
+<p>Abhyas was founded by <a href={u('/authors/niraj-singh/')}>Niraj Singh</a>, who leads the site as founder and CEO. <a href={u('/authors/abhyas-team/')}>The Abhyas Team</a> prepares the papers, tests and articles, and <a href={u('/authors/jay-verma/')}>Jay Verma</a> checks the previous year papers, test series and PYQ PDFs for errors. Meet everyone on the <a href={u('/team/')}>team page</a>.</p>
+
+<h2>How we keep content accurate</h2>
+<p>Every paper and test series is checked by a second person before it goes live, and mistakes reported by readers are re-checked and corrected. The full process is in our <a href={u('/editorial-policy/')}>editorial policy</a>.</p>
+
+<h2>How Abhyas is funded</h2>
+<p>Abhyas is free for everyone. To cover the cost of running the site we may show ads from Google AdSense. Ads never decide what we publish. Read more in the <a href={u('/privacy-policy/')}>privacy policy</a>.</p>
+
 <h2>Please note</h2>
-<p>Papers and tests here are for practice. Exam patterns and syllabi change, so always confirm the latest details in the official notification of the exam conducting body. Abhyas is independent and not affiliated with any exam conducting body.</p>
+<p>Papers and tests here are for practice. Exam patterns and syllabi change, so always confirm the latest details in the official notification of the exam conducting body. Abhyas is independent and not affiliated with any exam conducting body. See the <a href={u('/disclaimer/')}>disclaimer</a>.</p>
+
+<h2>Get in touch</h2>
+<p>Feedback, corrections and suggestions are welcome. Write to us through the <a href={u('/contact/')}>contact page</a>.</p>
   </div></section>
 </Layout>

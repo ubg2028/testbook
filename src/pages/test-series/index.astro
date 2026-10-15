@@ -6,7 +6,7 @@ import { u } from '../../lib/url.js';
 <Layout title="Online Test Series" description="Full length mock test series for government exams with negative marking, instant results and solutions." path="/test-series/">
   <section class="wrap sec">
     <h1>Test series</h1>
-    <p class="muted">Full length mock tests for every exam.</p>
+    <p class="muted" style="max-width:680px">Full length mock tests for every exam, with negative marking and instant analysis. After each test, follow our <a href={u('/blog/mock-test-analysis-method/')} style="color:var(--brand);text-decoration:underline">30 minute analysis routine</a>, and practise on real <a href={u('/previous-year-papers/')} style="color:var(--brand);text-decoration:underline">previous year papers</a> too. Questions are prepared and checked as described in our <a href={u('/editorial-policy/')} style="color:var(--brand);text-decoration:underline">editorial policy</a>.</p>
     {cats.map(c => (
       <div class="cat">
         <h3>{c}</h3>

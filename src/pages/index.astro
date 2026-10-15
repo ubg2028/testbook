@@ -4,10 +4,16 @@ import site from '../data/site.json';
 import { exams, papers, series, examMap, cats, CFG, questionsFor } from '../lib/data.js';
 import { u } from '../lib/url.js';
 import AdSlot from '../components/AdSlot.astro';
+import { getPosts, fmtDate } from '../lib/blog.js';
 const latest = papers.filter(p => p.year === 2024).slice(0, 8);
 const featured = series.slice(0, 6);
 const popular = exams.slice(0, 6);
-const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: new URL(u('/'), Astro.site).href, description: site.tagline };
+const posts = (await getPosts()).slice(0, 3);
+const home = new URL(u('/'), Astro.site).href;
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: home, description: site.tagline },
+  { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: home, description: site.tagline, logo: new URL(u('/icon-512.png'), Astro.site).href, founder: { '@type': 'Person', name: 'Niraj Singh', jobTitle: 'Founder and CEO', url: new URL(u('/authors/niraj-singh/'), Astro.site).href } },
+];
 ---
 <Layout title={site.name} description={site.tagline} path="/" schema={schema}>
   <section class="wrap hero">
@@ -65,6 +71,30 @@ const schema = { '@context': 'https://schema.org', '@type': 'WebSite', name: sit
       <div><h3>Resume anytime</h3><p>Progress saves on your device. Refresh or lose power and carry on where you stopped.</p></div>
     </div>
   </section>
+
+  <section class="wrap sec lazy">
+    <h2>Why you can trust the papers</h2>
+    <div class="feat">
+      <div><h3>Checked before publishing</h3><p>A second person checks every paper, test series and PYQ PDF. Read our <a href={u('/editorial-policy/')} style="color:var(--brand);text-decoration:underline">editorial policy</a>.</p></div>
+      <div><h3>Real people, named</h3><p>Meet the founder, the reviewer and the editorial team on the <a href={u('/team/')} style="color:var(--brand);text-decoration:underline">team page</a>.</p></div>
+      <div><h3>Mistakes get fixed</h3><p>Report a wrong answer through <a href={u('/contact/')} style="color:var(--brand);text-decoration:underline">contact</a> and it is re-checked and corrected.</p></div>
+    </div>
+  </section>
+
+  {posts.length > 0 && (
+    <section class="wrap sec lazy">
+      <div class="sec-h"><h2>From the blog</h2><a href={u('/blog/')}>All articles</a></div>
+      <div class="grid">
+        {posts.map(p => (
+          <a class="card" href={u(`/blog/${p.id}/`)}>
+            <span class="tag">{p.data.category}</span>
+            <h3 style="margin-top:8px">{p.data.title}</h3>
+            <p class="muted" style="margin:0">{p.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 
   <section class="wrap sec lazy">
     <h2>Browse by exam</h2>

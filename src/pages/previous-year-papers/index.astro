@@ -6,7 +6,7 @@ import { u } from '../../lib/url.js';
 <Layout title="Previous Year Question Papers" description="Solve previous year question papers of SSC, Banking, Railways, UPSC and other exams online with instant results." path="/previous-year-papers/">
   <section class="wrap sec">
     <h1>Previous year papers</h1>
-    <p class="muted">Pick an exam, then a year.</p>
+    <p class="muted" style="max-width:680px">Pick an exam, then a year. Attempt each paper under a timer, read the solutions, and use the score analysis to find your weak topics. New to previous year papers? Read <a href={u('/blog/how-to-use-previous-year-papers/')} style="color:var(--brand);text-decoration:underline">how to use them the right way</a>. For full-length practice, try the <a href={u('/test-series/')} style="color:var(--brand);text-decoration:underline">mock test series</a>. See how we check papers in our <a href={u('/editorial-policy/')} style="color:var(--brand);text-decoration:underline">editorial policy</a>.</p>
     {cats.map(c => (
       <div class="cat">
         <h3>{c}</h3>

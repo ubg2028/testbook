@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { u } from '../lib/url.js';
+const schema = { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Editorial Policy', url: new URL(u('/editorial-policy/'), Astro.site).href, inLanguage: 'en' };
+---
+<Layout title="Editorial Policy" description="How Abhyas prepares, verifies, corrects and updates its previous year papers, mock tests and articles." path="/editorial-policy/" schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Editorial policy' }]} />
+  <section class="wrap sec"><div class="prose">
+<h1>Editorial policy</h1>
+<p class="lede">Aspirants plan their preparation around what they practise here, so a wrong answer or a careless article has a real cost. This page explains the rules our team follows to keep Abhyas accurate, useful and honest. Last updated October 2026.</p>
+
+<h2>What we publish</h2>
+<ul>
+  <li><strong>Previous year papers</strong> and their answers and solutions.</li>
+  <li><strong>Mock test series</strong> built to the pattern of each exam.</li>
+  <li><strong>PYQ PDFs</strong> offered for offline practice.</li>
+  <li><strong>Articles</strong> on the <a href={u('/blog/')}>blog</a>: preparation strategy, test analysis and exam guides.</li>
+</ul>
+
+<h2>Who is responsible</h2>
+<p>Abhyas is run by its founder and CEO, <a href={u('/authors/niraj-singh/')}>Niraj Singh</a>, who approves this policy and decides which exams and papers are added. Content is prepared by <a href={u('/authors/abhyas-team/')}>The Abhyas Team</a> and checked by <a href={u('/authors/jay-verma/')}>Jay Verma</a>. You can see everyone involved on the <a href={u('/team/')}>team page</a>, and every article names its author.</p>
+
+<h2>How papers and tests are prepared</h2>
+<ol>
+  <li><strong>Sourcing.</strong> Previous year papers are prepared from the question paper and answer key released by the exam conducting body wherever they are available. If a paper is rebuilt from candidates' memory or from a partial source, we say so on the page.</li>
+  <li><strong>Mock tests.</strong> Mock questions are written for practice, follow the subject mix of the exam, and are not presented as real exam questions.</li>
+  <li><strong>Solutions.</strong> Each question has a correct option and, where possible, a short explanation so you can learn from a mistake and not only see the answer.</li>
+  <li><strong>Language.</strong> Questions that appear in Hindi and English are prepared so that both versions ask the same thing.</li>
+</ol>
+
+<h2>How content is verified</h2>
+<p>Before a paper, test series or PYQ PDF is published, a second person, <a href={u('/authors/jay-verma/')}>Jay Verma</a>, checks it. The review covers:</p>
+<ul>
+  <li>Questions match the source paper, with none missing or repeated.</li>
+  <li>The answer key and the solutions are correct.</li>
+  <li>Options are complete and in the right order.</li>
+  <li>The Hindi and English versions agree.</li>
+  <li>For PDFs: page order, readability and a correct title, exam name and year.</li>
+</ul>
+<p>Practice tests that still use sample or placeholder questions are labelled as demo papers on the test page and are not described as verified.</p>
+
+<h2>How articles are checked</h2>
+<p>Facts about an exam, such as its pattern, syllabus, eligibility, dates or marking scheme, are checked against the official notification before we publish them, and we tell you to confirm the latest details there because they change. Advice articles, such as study methods, are written from teaching and practice experience and say clearly that they are advice and not a guarantee. We do not promise selection, ranks or scores.</p>
+
+<h2>Corrections</h2>
+<p>We make mistakes, and we want to hear about them. If you find a wrong answer, a typo, a missing question or an outdated fact, write to us through the <a href={u('/contact/')}>contact page</a> with the test name and the question number. A reported error is re-checked by the verification reviewer, and when it is confirmed we correct the page. Articles that change in a meaningful way show an updated date.</p>
+
+<h2>Keeping content up to date</h2>
+<p>Exam patterns and syllabi change. We review exam pages when an official notification changes the pattern, and we add new papers as they become available. If something on a page looks out of date, tell us.</p>
+
+<h2>Advertising and independence</h2>
+<p>Abhyas is free to use and may show ads served by Google AdSense. Advertisers do not influence what we write, which papers we publish or what our answers say. We do not accept payment to review, rank or recommend a coaching institute, app or product, and any sponsored content would be clearly labelled.</p>
+
+<h2>What we will not publish</h2>
+<ul>
+  <li>Leaked or stolen question papers, or content obtained by breaking an exam's rules.</li>
+  <li>Material copied from another site or publisher without permission. See our <a href={u('/dmca/')}>copyright policy</a>.</li>
+  <li>Claims such as "guaranteed selection" or "100% common questions".</li>
+  <li>Misleading or hateful content.</li>
+</ul>
+
+<h2>Related pages</h2>
+<p>Read <a href={u('/about/')}>about Abhyas</a>, meet the <a href={u('/team/')}>team</a>, see our <a href={u('/disclaimer/')}>disclaimer</a>, or start practising with the <a href={u('/previous-year-papers/')}>previous year papers</a> and <a href={u('/test-series/')}>test series</a>.</p>
+  </div></section>
+</Layout>

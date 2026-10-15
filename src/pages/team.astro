@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { authors } from '../lib/blog.js';
+import { u } from '../lib/url.js';
+const abs = p => new URL(u(p), Astro.site).href;
+const schema = {
+  '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Our team', url: abs('/team/'),
+  mainEntity: { '@type': 'Organization', name: 'Abhyas', url: abs('/'), member: authors.filter(a => a.slug !== 'abhyas-team').map(a => ({ '@type': 'Person', name: a.name, jobTitle: a.role, url: abs(`/authors/${a.slug}/`) })) },
+};
+---
+<Layout title="Our Team" description="Meet the people behind Abhyas: the founder, the content verification reviewer and the editorial team." path="/team/" schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Our team' }]} />
+  <section class="wrap sec">
+    <div class="prose">
+      <h1>Our team</h1>
+      <p class="lede">Abhyas is built by a small team that cares about one thing: giving exam aspirants practice material they can trust. Here is who does what.</p>
+    </div>
+    <div class="team mt">
+      {authors.map(a => (
+        <article class="card">
+          <div class="who">
+            <span class="avatar" aria-hidden="true">{a.initials}</span>
+            <div><h2 style="font-size:1.2rem">{a.name}</h2><span class="tag">{a.role}</span></div>
+          </div>
+          <p>{a.summary}</p>
+          <a class="btn sm ghost" href={u(`/authors/${a.slug}/`)} style="align-self:flex-start">Read full profile</a>
+        </article>
+      ))}
+    </div>
+    <div class="prose mt">
+      <h2>How we work together</h2>
+      <p>The Abhyas Team prepares papers, tests and articles. Jay Verma checks the papers, test series and PYQ PDFs for errors before they go live, and Niraj Singh sets the standards everyone follows. The full process is described in our <a href={u('/editorial-policy/')}>editorial policy</a>.</p>
+      <p>Found a mistake or want to suggest a paper? Write to us through the <a href={u('/contact/')}>contact page</a>. You can also read our <a href={u('/blog/')}>blog</a>, learn <a href={u('/about/')}>about Abhyas</a>, or start with the <a href={u('/exams/')}>exam list</a>.</p>
+    </div>
+  </section>
+</Layout>

@@ -1,19 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import site from '../data/site.json';
+import { u } from '../lib/url.js';
 ---
-<Layout title="Privacy Policy" description="How Abhyas handles your data, cookies and local storage." path="/privacy-policy/">
+<Layout title="Privacy Policy" description="How Abhyas handles your data, cookies, local storage and Google AdSense advertising." path="/privacy-policy/">
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Privacy policy' }]} />
   <section class="wrap sec"><div class="prose">
 <h1>Privacy Policy</h1>
-<p>Abhyas does not ask you to create an account and does not collect your name, email or phone number.</p>
+<p>Last updated October 2026.</p>
+<p>Abhyas does not ask you to create an account and does not ask for your name, email or phone number to use the site. This page explains what is stored, what third parties may collect, and what choices you have.</p>
+
 <h2>Data stored on your device</h2>
-<p>To work properly the site saves test progress, results, saved questions, language and theme choice in your browser storage. This data stays on your device. You can delete it any time from the My progress page or by clearing your browser data. A service worker also keeps copies of visited pages so they open offline.</p>
+<p>To work properly the site saves test progress, results, saved questions, language and theme choice in your browser storage. This data stays on your device and is not sent to us. You can delete it any time from the <a href={u('/dashboard/')}>My progress</a> page or by clearing your browser data. A service worker also keeps copies of visited pages so they open offline.</p>
+
 <h2>Advertising and cookies</h2>
-<p>If advertisements are shown, they are served by Google AdSense. Google and its partners may use cookies to show ads based on your visits to this and other sites. You can manage personalised ads in your Google ad settings or at <a href="https://policies.google.com/technologies/ads" rel="noopener" style="color:var(--brand)">policies.google.com/technologies/ads</a>.</p>
+<p>We may show advertisements served by Google AdSense. Google and its partners, as third-party vendors, use cookies to serve ads based on your visits to this and other websites. The use of advertising cookies lets Google and its partners show ads based on your visit to our site and other sites on the internet.</p>
+<p>You can choose how ads are personalised in your <a href="https://adssettings.google.com" rel="noopener">Google ad settings</a>, and learn more at <a href="https://policies.google.com/technologies/ads" rel="noopener">policies.google.com/technologies/ads</a>. You can also opt out of some third-party vendors' use of cookies for personalised advertising at <a href="https://www.aboutads.info" rel="noopener">aboutads.info</a>. Google explains how it uses data from sites that use its services at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>.</p>
+<p>Where the law requires your consent, such as in the European Economic Area and the United Kingdom, you may be shown a consent message before personalised ads are served. You can usually change your browser settings to block or delete cookies, but parts of the site may not work as well.</p>
+
+<h2>Information you send us</h2>
+<p>If you email us, for example to report a mistake, we use your email address and message only to reply and to fix the issue. We do not sell your information. Our address is <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+
 <h2>Hosting logs</h2>
-<p>The site is hosted on GitHub Pages, which may keep standard server logs such as IP address and browser type.</p>
+<p>The site is hosted on GitHub Pages, which may keep standard server logs such as IP address, browser type and the pages requested, for security and operation.</p>
+
+<h2>Links to other sites</h2>
+<p>Pages may link to other websites, including official exam websites. We are not responsible for their content or privacy practices, so please read their policies.</p>
+
 <h2>Children</h2>
-<p>The site is meant for exam aspirants. We do not knowingly collect personal information from children.</p>
+<p>The site is meant for exam aspirants. We do not knowingly collect personal information from children under 13.</p>
+
+<h2>Your choices</h2>
+<p>Because we hold no account data about you, there is nothing for us to export or delete on a server. For data stored in your browser, use the steps above. If you have a question about your privacy, write to us through the <a href={u('/contact/')}>contact page</a>.</p>
+
 <h2>Changes</h2>
-<p>We may update this policy. The latest version is always on this page. Questions can be sent through the contact page.</p>
+<p>We may update this policy. The latest version is always on this page, with its date at the top. See also our <a href={u('/terms/')}>terms of use</a>, <a href={u('/disclaimer/')}>disclaimer</a> and <a href={u('/editorial-policy/')}>editorial policy</a>.</p>
   </div></section>
 </Layout>

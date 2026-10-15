@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import site from '../data/site.json';
 import { u } from '../lib/url.js';
-const { title, description = site.tagline, path = '/', schema } = Astro.props;
+const { title, description = site.tagline, path = '/', schema, ogType = 'website' } = Astro.props;
 const full = title === site.name ? title : `${title} | ${site.name}`;
 const canonical = new URL(u(path), Astro.site).href;
 ---
@@ -17,7 +17,8 @@ const canonical = new URL(u(path), Astro.site).href;
   <meta name="theme-color" content="#2447d6" />
   <meta property="og:title" content={full} />
   <meta property="og:description" content={description} />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content={site.name} />
   <meta property="og:url" content={canonical} />
   <script is:inline>
     (function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t})();
@@ -26,6 +27,7 @@ const canonical = new URL(u(path), Astro.site).href;
   <link rel="apple-touch-icon" href={u('/icon-192.png')} />
   {site.adsense.client && <meta name="google-adsense-account" content={site.adsense.client} />}
   <link rel="manifest" href={u('/manifest.webmanifest')} />
+  <link rel="alternate" type="application/rss+xml" title={`${site.name} blog`} href={u('/rss.xml')} />
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 </head>
 <body>
@@ -41,6 +43,7 @@ const canonical = new URL(u(path), Astro.site).href;
         <a href={u('/test-series/')}>Test series</a>
         <a href={u('/previous-year-papers/')}>Previous year papers</a>
         <a href={u('/daily-quiz/')}>Daily quiz</a>
+        <a href={u('/blog/')}>Blog</a>
         <a href={u('/dashboard/')}>My progress</a>
       </nav>
       <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark mode">
@@ -56,17 +59,42 @@ const canonical = new URL(u(path), Astro.site).href;
   <main id="main"><slot /></main>
   <footer class="foot">
     <div class="wrap">
-      <div class="flinks">
-        <a href={u('/about/')}>About</a>
-        <a href={u('/contact/')}>Contact</a>
-        <a href={u('/privacy-policy/')}>Privacy policy</a>
-        <a href={u('/terms/')}>Terms</a>
-        {site.telegram && <a href={site.telegram} rel="noopener">Telegram</a>}
-        {site.whatsapp && <a href={site.whatsapp} rel="noopener">WhatsApp channel</a>}
-        <button class="btn sm ghost" id="install" type="button" hidden>Install app</button>
+      <div class="fcols">
+        <div>
+          <h2>{site.name}</h2>
+          <p>{site.tagline}</p>
+        </div>
+        <nav aria-label="Practice">
+          <h2>Practice</h2>
+          <a href={u('/exams/')}>All exams</a>
+          <a href={u('/previous-year-papers/')}>Previous year papers</a>
+          <a href={u('/test-series/')}>Test series</a>
+          <a href={u('/daily-quiz/')}>Daily quiz</a>
+          <a href={u('/blog/')}>Blog</a>
+        </nav>
+        <nav aria-label="About Abhyas">
+          <h2>About Abhyas</h2>
+          <a href={u('/about/')}>About us</a>
+          <a href={u('/team/')}>Our team</a>
+          <a href={u('/editorial-policy/')}>Editorial policy</a>
+          <a href={u('/contact/')}>Contact</a>
+          {site.telegram && <a href={site.telegram} rel="noopener">Telegram</a>}
+          {site.whatsapp && <a href={site.whatsapp} rel="noopener">WhatsApp channel</a>}
+        </nav>
+        <nav aria-label="Legal">
+          <h2>Legal</h2>
+          <a href={u('/privacy-policy/')}>Privacy policy</a>
+          <a href={u('/terms/')}>Terms of use</a>
+          <a href={u('/disclaimer/')}>Disclaimer</a>
+          <a href={u('/dmca/')}>Copyright and DMCA</a>
+          <a href={u('/sitemap/')}>Sitemap</a>
+        </nav>
       </div>
-      <p>{site.name} is an independent practice platform. It is not affiliated with any exam conducting body.</p>
-      <p>Your test progress is saved on this device only.</p>
+      <div class="fbase">
+        <p>{site.name} is an independent practice platform. It is not affiliated with any exam conducting body.</p>
+        <p>Your test progress is saved on this device only. <button class="btn sm ghost" id="install" type="button" hidden>Install app</button></p>
+        <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+      </div>
     </div>
   </footer>
   <a id="resume" class="resume" href="#resume" hidden>Back to test <span id="rt"></span></a>

@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { getPosts, authorMap, fmtDate } from '../../lib/blog.js';
+import { u } from '../../lib/url.js';
+const posts = await getPosts();
+const schema = { '@context': 'https://schema.org', '@type': 'Blog', name: 'Abhyas Blog', url: new URL(u('/blog/'), Astro.site).href, description: 'Exam preparation guides, strategy and mock test analysis for government exam aspirants.' };
+---
+<Layout title="Blog" description="Exam preparation guides, strategy and mock test analysis for SSC, Banking, Railways, UPSC and other government exams." path="/blog/" schema={schema}>
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Blog' }]} />
+  <section class="wrap sec">
+    <h1>Blog</h1>
+    <p class="muted" style="max-width:640px">Preparation guides, exam strategy and test analysis from the Abhyas team. Every article names its author and follows our <a href={u('/editorial-policy/')} style="color:var(--brand);text-decoration:underline">editorial policy</a>.</p>
+    {posts.length === 0 ? (
+      <div class="card empty"><h2>No articles yet</h2><p class="muted">New articles will appear here. Meanwhile, try a <a href={u('/previous-year-papers/')} style="color:var(--brand)">previous year paper</a>.</p></div>
+    ) : (
+      <div class="postlist">
+        {posts.map(p => (
+          <article class="card">
+            <span class="tag">{p.data.category}</span>
+            <h2><a href={u(`/blog/${p.id}/`)}>{p.data.title}</a></h2>
+            <p class="muted">{p.data.description}</p>
+            <p class="muted" style="margin:0">By <a href={u(`/authors/${p.data.author}/`)} style="color:var(--brand);font-weight:600">{authorMap[p.data.author].name}</a> on {fmtDate(p.data.date)}</p>
+          </article>
+        ))}
+      </div>
+    )}
+    <p class="muted mt">Subscribe with <a href={u('/rss.xml')} style="color:var(--brand)">RSS</a>. Looking for practice? Browse <a href={u('/exams/')} style="color:var(--brand)">all exams</a> or the <a href={u('/test-series/')} style="color:var(--brand)">test series</a>.</p>
+  </section>
+</Layout>

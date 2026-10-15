@@ -1,5 +1,5 @@
 // Stale-while-revalidate: pages you visited keep working offline / during power cuts.
-const V = 'abhyas-v2';
+const V = 'abhyas-v3';
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(
   caches.keys().then(k => Promise.all(k.filter(x => x !== V).map(x => caches.delete(x)))).then(() => self.clients.claim())

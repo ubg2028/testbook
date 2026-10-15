@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { u } from '../lib/url.js';
+---
+<Layout title="Disclaimer" description="Abhyas is an independent practice platform. Read what our papers, tests and articles do and do not promise." path="/disclaimer/">
+  <Crumbs items={[{ n: 'Home', u: u('/') }, { n: 'Disclaimer' }]} />
+  <section class="wrap sec"><div class="prose">
+<h1>Disclaimer</h1>
+<p>Last updated October 2026.</p>
+<h2>Independent platform</h2>
+<p>Abhyas is an independent practice platform. It is not affiliated with, endorsed by or connected to the Staff Selection Commission, the Union Public Service Commission, the Railway Recruitment Boards, IBPS, SBI, the National Testing Agency or any other exam conducting body or government organisation. Exam names are used only to describe what a practice paper is meant for.</p>
+<h2>For practice only</h2>
+<p>Papers, mock tests, solutions and articles on this site are for practice and learning. Doing well on our tests does not mean you will pass a real exam, and we do not promise selection, ranks or scores.</p>
+<h2>Check official sources</h2>
+<p>Exam pattern, syllabus, eligibility, dates, fees and marking schemes change often. Always confirm them in the official notification or website of the exam conducting body before you make a decision.</p>
+<h2>Accuracy</h2>
+<p>Our team checks content before it is published, as explained in the <a href={u('/editorial-policy/')}>editorial policy</a>, but mistakes can still happen. If you find one, tell us through the <a href={u('/contact/')}>contact page</a> and we will correct it. Tests that still use sample questions are labelled as demo papers.</p>
+<h2>External links</h2>
+<p>We may link to other websites. We do not control them and are not responsible for their content or privacy practices.</p>
+<h2>Advertising</h2>
+<p>This site may show advertisements served by Google AdSense. Ads do not mean that we endorse the advertised product or service. See the <a href={u('/privacy-policy/')}>privacy policy</a> for how ads and cookies work.</p>
+<h2>Related pages</h2>
+<p><a href={u('/terms/')}>Terms of use</a>, <a href={u('/privacy-policy/')}>Privacy policy</a>, <a href={u('/dmca/')}>Copyright and DMCA</a> and <a href={u('/about/')}>About Abhyas</a>.</p>
+  </div></section>
+</Layout>
