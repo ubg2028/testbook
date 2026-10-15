@@ -69,6 +69,10 @@ const canonical = new URL(u(path), Astro.site).href;
       <p>Your test progress is saved on this device only.</p>
     </div>
   </footer>
+  <a id="resume" class="resume" href="#resume" hidden>Back to test <span id="rt"></span></a>
+  <button class="icon-btn fab" id="totop" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
   <script is:inline>
     (function(){
       var r=document.documentElement,nav=document.getElementById('nav'),mb=document.getElementById('menu'),tb=document.getElementById('theme');
@@ -78,13 +82,34 @@ const canonical = new URL(u(path), Astro.site).href;
       document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
       document.addEventListener('click',function(e){if(!e.target.closest('.top'))setMenu(false)});
       tb.addEventListener('click',function(){
-        var t=r.dataset.theme==='dark'?'light':'dark';r.dataset.theme=t;
-        try{localStorage.setItem('theme',t)}catch(e){}
-        document.querySelector('meta[name=theme-color]').content=t==='dark'?'#121a27':'#2447d6';
+        var t=r.dataset.theme==='dark'?'light':'dark';
+        var apply=function(){r.dataset.theme=t;try{localStorage.setItem('theme',t)}catch(e){}document.querySelector('meta[name=theme-color]').content=t==='dark'?'#121a27':'#2447d6'};
+        if(matchMedia('(prefers-reduced-motion:reduce)').matches){apply();return}
+        if(!document.startViewTransition){r.classList.add('tfade');apply();setTimeout(function(){r.classList.remove('tfade')},450);return}
+        var b=tb.getBoundingClientRect(),x=b.left+b.width/2,y=b.top+b.height/2,rad=Math.hypot(Math.max(x,innerWidth-x),Math.max(y,innerHeight-y));
+        r.classList.add('tvt');
+        var vt=document.startViewTransition(apply);
+        vt.ready.then(function(){r.animate({clipPath:['circle(0px at '+x+'px '+y+'px)','circle('+rad+'px at '+x+'px '+y+'px)']},{duration:550,easing:'cubic-bezier(.4,0,.2,1)',pseudoElement:'::view-transition-new(root)'})});
+        vt.finished.then(function(){r.classList.remove('tvt')},function(){r.classList.remove('tvt')});
       });
       var dp,ib=document.getElementById('install');
       addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;ib.hidden=false});
       ib.addEventListener('click',function(){if(dp){dp.prompt();ib.hidden=true}});
+    })();
+  </script>
+  <script is:inline>
+    (function(){
+      var up=document.getElementById('totop'),tk=0;
+      addEventListener('scroll',function(){if(tk)return;tk=requestAnimationFrame(function(){tk=0;up.classList.toggle('show',scrollY>500)})},{passive:true});
+      up.addEventListener('click',function(){scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})});
+      var ra=document.getElementById('resume'),rt=document.getElementById('rt');
+      function chk(){
+        var a;try{a=JSON.parse(localStorage.getItem('abhyas:active'))}catch(e){}
+        if(!a||a.end<=Date.now()||location.pathname===a.h){ra.hidden=true;return}
+        var sec=Math.round((a.end-Date.now())/1000),m=Math.floor(sec/60),s=sec%60;
+        ra.href=a.h+'#resume';rt.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;ra.hidden=false;
+      }
+      chk();setInterval(chk,1000);
     })();
   </script>
   {site.adsense.client && <script is:inline define:vars={{ c: site.adsense.client }}>

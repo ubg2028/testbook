@@ -119,6 +119,7 @@ const j = o => JSON.stringify(o).replace(/</g, '\\u003c');
   }
   function run() {
     if (!st.tm) st.tm = Array(N).fill(0);
+    lsSet('abhyas:active', { h: meta.href, end: st.end, t: meta.title });
     show('exam'); draw();
     clearInterval(timer); timer = setInterval(tick, 1000); tick();
   }
@@ -145,6 +146,7 @@ const j = o => JSON.stringify(o).replace(/</g, '\\u003c');
   }
   function finish() {
     clearInterval(timer);
+    try { localStorage.removeItem('abhyas:active'); } catch (e) {}
     if (st.status === 'done' && st.res) return result();
     let c = 0, w = 0; const sub = {};
     Q.forEach((q, k) => {
@@ -214,5 +216,7 @@ const j = o => JSON.stringify(o).replace(/</g, '\\u003c');
   });
 
   syncLang();
-  if (st && st.status === 'run' && st.end <= Date.now()) finish(); else intro();
+  if (st && st.status === 'run' && st.end <= Date.now()) finish();
+  else if (location.hash === '#resume' && running()) run();
+  else intro();
 </script>
